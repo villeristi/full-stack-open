@@ -1,8 +1,11 @@
 import React from 'react';
+import { get } from 'axios'
 
 import Person from './person'
 import Filter from './filter'
 import Form from './form'
+
+const API_URL = 'http://localhost:3001'
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +17,14 @@ class App extends React.Component {
         name: '',
         number: '',
       }
+    }
+  }
+
+  async componentDidMount() {
+    const { persons } = this.state
+    if( !persons.length ) {
+      const {data} = await get(`${API_URL}/persons`)
+      this.setState({ persons: data })
     }
   }
 
