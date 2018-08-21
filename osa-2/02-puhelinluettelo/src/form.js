@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Form = ({ onSubmit, newPerson, updateName, updatePhone}) => {
+const Form = ({ onSubmit, newPerson, updateName, updateNumber}) => {
   return (
     <div>
       <h2>Lisää uusi</h2>
@@ -9,7 +9,7 @@ const Form = ({ onSubmit, newPerson, updateName, updatePhone}) => {
           nimi: <input value={newPerson.name} onChange={updateName} />
         </div>
         <div>
-          numero: <input value={newPerson.phone} onChange={updatePhone} />
+          numero: <input value={newPerson.number} onChange={updateNumber} />
         </div>
         <div>
           <button type="submit">lisää</button>

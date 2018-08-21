@@ -12,7 +12,7 @@ class App extends React.Component {
       filter: '',
       newPerson: {
         name: '',
-        phone: '',
+        number: '',
       }
     }
   }
@@ -23,12 +23,12 @@ class App extends React.Component {
 
     if( !this.personExists() ) {
       this.setState(() => {
-        return { persons: [...persons, { name: newPerson.name, phone: newPerson.phone } ]}
+        return { persons: [...persons, { name: newPerson.name, number: newPerson.number } ]}
       }, () => this.setState(() => {
         return {
           newPerson: {
             name: '',
-            phone: ''
+            number: ''
           }
         }
       }))
@@ -45,9 +45,9 @@ class App extends React.Component {
     return this.setState({ newPerson: { ...newPerson, name: e.target.value }})
   }
 
-  updatePhone = (e) => {
+  updateNumber = (e) => {
     const { newPerson } = this.state
-    return this.setState({ newPerson: { ...newPerson, phone: e.target.value }})
+    return this.setState({ newPerson: { ...newPerson, number: e.target.value }})
   }
 
   updateFilter = (e) => {
@@ -69,13 +69,13 @@ class App extends React.Component {
           onSubmit={this.addPerson}
           newPerson={newPerson}
           updateName={this.updateName}
-          updatePhone={this.updatePhone}
+          updateNumber={this.updateNumber}
          />
 
         <h2>Numerot</h2>
         <table>
           <tbody>
-            {filteredPersons.map(({name, phone}, index) => <Person key={index} name={name} phone={phone} />)}
+            {filteredPersons.map(({name, number}, index) => <Person key={index} name={name} number={number} />)}
           </tbody>
         </table>
       </div>
