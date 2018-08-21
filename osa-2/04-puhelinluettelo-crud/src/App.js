@@ -5,6 +5,7 @@ import * as crudService from './services/crudService'
 import Person from './person'
 import Filter from './filter'
 import Form from './form'
+import Notification from './notification'
 
 const blankPerson = {
   name: '',
@@ -17,7 +18,8 @@ class App extends React.Component {
     this.state = {
       persons: [],
       filter: '',
-      newPerson: blankPerson
+      newPerson: blankPerson,
+      notification: null,
     }
   }
 
@@ -39,7 +41,10 @@ class App extends React.Component {
 
       this.setState(() => {
         return { persons: [...persons, { name: data.name, number: data.number, id: data.id } ]}
-      }, () => this.clearFields())
+      }, () => {
+        this.displayNotification(`Lisättiin ${data.name}`, 'success')
+        this.clearFields()
+      })
     } else {
       return this.updatePerson(newPerson, existingPerson.id)
     }
@@ -53,8 +58,10 @@ class App extends React.Component {
       const personIndex = persons.findIndex((person) => person.id === id)
       const { data } = await crudService.update(id, personData)
       persons[personIndex] = data
-      this.setState({ persons }, () => console.log(this.state.persons))
-      this.clearFields()
+      this.setState({ persons }, () => {
+        this.displayNotification(`Muokattiin henkilön ${data.name} numeroa`)
+        this.clearFields()
+      })
     }
   }
 
@@ -69,10 +76,10 @@ class App extends React.Component {
         await crudService.del(id)
         persons.splice(personIndex)
 
-        return this.setState({ persons })
+        return this.setState({ persons }, () => this.displayNotification(`Poistettiin ${selectedPerson.name}`))
 
       } catch(e) {
-        alert('Something went wrong :(')
+        return this.displayNotification('O-ou, jokin meni vikaan...', 'error')
       }
     }
   }
@@ -96,19 +103,25 @@ class App extends React.Component {
     return this.setState({ filter: e.target.value })
   }
 
+  displayNotification = (message, status = 'success') => {
+    this.setState({ notification: { message, status }})
+    setTimeout(() => this.setState({ notification: null }), 3000)
+  }
+
   clearFields = () => {
     return this.setState({ newPerson: { name: '', number: '' }})
   }
 
   render() {
 
-    const { persons, newPerson, filter } = this.state
+    const { persons, newPerson, filter, notification } = this.state
     const filteredPersons = persons.filter(({ name }) => name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)
 
     return (
       <div>
         <h1>Puhelinluettelo</h1>
 
+        {notification && <Notification message={notification.message} status={notification.status} />}
         <Filter value={filter} onChange={this.updateFilter} />
 
         <Form
