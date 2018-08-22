@@ -1,10 +1,18 @@
-const db = require('./config/mongo')
-const Person = require('./config/models')
+const db = require('./api/config/mongo')
+const Person = require('./api/config/models')
 
 db.connect()
 
-if( process.argv.length < 4 ) {
-  return console.log('Dude...')
+if( process.argv.length === 2 ) {
+  return Person
+    .find()
+    .then((persons) => {
+      console.log('puhelinluettelo:')
+      persons.forEach( person => {
+        console.log(person.name, person.number)
+      })
+      db.close()
+    })
 }
 
 const name = process.argv[2]
