@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 import * as crudService from './services/crudService'
 
@@ -40,7 +40,7 @@ class App extends React.Component {
       const { data } = await crudService.create(newPerson)
 
       this.setState(() => {
-        return { persons: [...persons, { name: data.name, number: data.number, id: data.id } ]}
+        return { persons: [...persons, { name: data.name, number: data.number, id: data.id } ] }
       }, () => {
         this.displayNotification(`Lisättiin ${data.name}`, 'success')
         this.clearFields()
@@ -91,12 +91,12 @@ class App extends React.Component {
 
   updateName = (e) => {
     const { newPerson } = this.state
-    return this.setState({ newPerson: { ...newPerson, name: e.target.value }})
+    return this.setState({ newPerson: { ...newPerson, name: e.target.value } } )
   }
 
   updateNumber = (e) => {
     const { newPerson } = this.state
-    return this.setState({ newPerson: { ...newPerson, number: e.target.value }})
+    return this.setState({ newPerson: { ...newPerson, number: e.target.value } } )
   }
 
   updateFilter = (e) => {
@@ -104,12 +104,12 @@ class App extends React.Component {
   }
 
   displayNotification = (message, status = 'success') => {
-    this.setState({ notification: { message, status }})
+    this.setState({ notification: { message, status } } )
     setTimeout(() => this.setState({ notification: null }), 3000)
   }
 
   clearFields = () => {
-    return this.setState({ newPerson: { name: '', number: '' }})
+    return this.setState({ newPerson: { name: '', number: '' } } )
   }
 
   render() {
@@ -129,12 +129,12 @@ class App extends React.Component {
           newPerson={newPerson}
           updateName={this.updateName}
           updateNumber={this.updateNumber}
-         />
+        />
 
         <h2>Numerot</h2>
         <table>
           <tbody>
-            {filteredPersons.map(({name, number, id}, index) => <Person key={index} name={name} number={number} id={id} onDelete={this.deletePerson} />)}
+            {filteredPersons.map(({ name, number, id }, index) => <Person key={index} name={name} number={number} id={id} onDelete={this.deletePerson} />)}
           </tbody>
         </table>
       </div>

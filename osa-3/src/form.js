@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Form = ({ onSubmit, newPerson, updateName, updateNumber}) => {
+const Form = ({ onSubmit, newPerson, updateName, updateNumber }) => {
   return (
     <div>
       <h2>Lisää uusi</h2>
