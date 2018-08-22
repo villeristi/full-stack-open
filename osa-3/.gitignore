@@ -1,6 +1,6 @@
 node_modules
 *.log
-osa-3/static
+static/*
 
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 

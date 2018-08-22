@@ -21,7 +21,6 @@
   "bugs": {
     "url": "https://github.com/villeristi/full-stack-open/issues"
   },
-  "homepage": "https://github.com/villeristi/full-stack-open#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "express": "^4.16.3",
