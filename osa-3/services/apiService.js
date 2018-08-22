@@ -10,9 +10,13 @@ module.exports = {
   },
 
   create(data) {
-    const person = new Person(data)
+    try {
+      const person = new Person(data)
 
-    return person.save()
+      return person.save()
+    } catch(e) {
+      return e
+    }
   },
 
   async update(id, data) {
