@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "lint": "eslint .",
+    "test": "jest --verbose"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,11 @@
     "mongoose": "^5.2.9"
   },
   "devDependencies": {
+    "eslint": "^5.4.0",
+    "jest": "^23.5.0",
     "nodemon": "^1.18.3"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

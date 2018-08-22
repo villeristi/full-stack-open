@@ -1,6 +1,6 @@
 const blogService = require('../services/blogService')
 
-const post = async (req, res, next) => {
+const post = async (req, res) => {
   const blogData = req.body
   try {
     const data = await blogService.create(blogData)
