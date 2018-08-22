@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('./config/morgan')
+const path = require('path')
 const db = require('./config/mongo')
 
 db.connect()
@@ -30,7 +31,7 @@ app.use(morgan())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router)
-app.use(express.static('static'))
+app.use(express.static(path.join(__dirname, '..', 'static')))
 
 
 app.listen(PORT, () => {

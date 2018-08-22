@@ -1,12 +1,16 @@
 {
   "name": "full-stack-open-osa-3",
+  "homepage": "https://villeristi-fullstack-open.herokuapp.com",
   "version": "1.0.0",
   "description": "Full Stack Open, osa 3",
   "main": "index.js",
   "scripts": {
-    "prestart": "cd ui && npm install && npm run build",
-    "start": "node index.js",
-    "watch": "nodemon index.js"
+    "prestart": "npm run ui:build",
+    "start": "node ./api/index.js",
+    "watch": "nodemon ./api/index.js",
+    "ui:start": "react-scripts start",
+    "ui:build": "react-scripts build && mv build/* static && rm -rf build",
+    "ui:test": "react-scripts test --env=jsdom"
   },
   "repository": {
     "type": "git",
