@@ -14,6 +14,12 @@ describe('Most likes', () => {
 
     expect(listHelper.favoriteBlog(dummyBlogs).title).toEqual(mostLikedTitle)
   })
+
+  test('Finds the author with most likes', () => {
+    const mostLikedAuthor = { author: 'Edsger W. Dijkstra', likes: 12 }
+
+    expect(listHelper.mostLikes(dummyBlogs)).toEqual(mostLikedAuthor)
+  })
 })
 
 describe('Most active', () => {
