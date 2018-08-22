@@ -1,6 +1,6 @@
 import { get as aGet, post, put, delete as aDel } from 'axios'
 
-const API_URL = 'http://localhost:3001/persons'
+const API_URL = '/api/persons'
 
 export const get = (id = '') => {
   return aGet(`${API_URL}/${id}`)
