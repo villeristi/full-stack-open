@@ -15,3 +15,11 @@ describe('Most likes', () => {
     expect(listHelper.favoriteBlog(dummyBlogs).title).toEqual(mostLikedTitle)
   })
 })
+
+describe('Most active', () => {
+  test('Finds the author with most blogs', () => {
+    const mostActive = { author: 'Robert C. Martin', blogCount: 3 }
+
+    expect(listHelper.mostBlogs(dummyBlogs)).toEqual(mostActive)
+  })
+})
