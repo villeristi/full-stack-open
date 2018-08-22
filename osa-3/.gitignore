@@ -1,6 +1,7 @@
 node_modules
 *.log
 static/*
+!static/.gitkeep
 
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
