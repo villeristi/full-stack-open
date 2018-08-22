@@ -19,9 +19,13 @@
   },
   "homepage": "https://github.com/villeristi/full-stack-open#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "express": "^4.16.3",
     "mongoose": "^5.2.9",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-scripts": "1.1.4"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
