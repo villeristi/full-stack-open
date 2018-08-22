@@ -10,7 +10,8 @@
     "watch": "nodemon ./api/index.js",
     "ui:start": "react-scripts start",
     "ui:build": "react-scripts build && cp -r build/* static/ && rm -rf build",
-    "ui:test": "react-scripts test --env=jsdom"
+    "ui:test": "react-scripts test --env=jsdom",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
