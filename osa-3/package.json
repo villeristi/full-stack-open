@@ -9,7 +9,7 @@
     "start": "node ./api/index.js",
     "watch": "nodemon ./api/index.js",
     "ui:start": "react-scripts start",
-    "ui:build": "react-scripts build && mv build/* static && rm -rf build",
+    "ui:build": "react-scripts build && cp -r build/* static && rm -rf build",
     "ui:test": "react-scripts test --env=jsdom"
   },
   "repository": {
