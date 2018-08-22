@@ -1,7 +1,8 @@
 {
-  "name": "02-puhelinluettelo",
+  "name": "03-puhelinluettelo-full-stack",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "https://villeristi-fullstack-open.herokuapp.com",
   "dependencies": {
     "axios": "^0.18.0",
     "json-server": "^0.14.0",
@@ -11,7 +12,7 @@
   },
   "scripts": {
     "start": "json-server --port=3001 --watch db.json & react-scripts start",
-    "build": "react-scripts build && cp -r build ../static",
+    "build": "react-scripts build && cp -r build/* ../static",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
