@@ -7,7 +7,7 @@
     "start": "node index",
     "dev": "nodemon index",
     "lint": "eslint .",
-    "test": "jest --verbose"
+    "test": "jest --verbose --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
   "devDependencies": {
     "eslint": "^5.4.0",
     "jest": "^23.5.0",
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.3",
+    "supertest": "^3.1.0"
   },
   "jest": {
     "testEnvironment": "node"
