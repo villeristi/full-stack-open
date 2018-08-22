@@ -1,0 +1,27 @@
+{
+  "name": "fullstack-open-osa-4",
+  "version": "1.0.0",
+  "description": "Full Stack Open - osa 4",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/villeristi/full-stack-open.git"
+  },
+  "author": "Wille <villeristimaki@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/villeristi/full-stack-open/issues"
+  },
+  "homepage": "https://github.com/villeristi/full-stack-open#readme",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.9"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
