@@ -7,7 +7,8 @@ const post = async (req, res) => {
 
     return res.status(201).json(data)
   } catch (e) {
-    return res.status(500).json(e )
+    const status = e.name && e.name === 'ValidationError' ? 400 : 500
+    return res.status(status).json(e)
   }
 }
 

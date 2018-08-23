@@ -6,12 +6,7 @@ module.exports = {
   },
 
   create(data) {
-    try {
-      const blog = new Blog(data)
-
-      return blog.save()
-    } catch(e) {
-      return e
-    }
+    const blog = new Blog(data)
+    return blog.save()
   }
 }
