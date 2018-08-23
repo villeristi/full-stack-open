@@ -1,4 +1,8 @@
 # Because I'm lazy...
-FOLDER="osa-3"
 
-git subtree push --prefix ${FOLDER} heroku master
+if [ -n "$@" ]; then
+  git subtree push --prefix ${@} heroku master
+  exit
+fi
+
+echo "Plz provide the folder..."
