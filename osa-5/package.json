@@ -4,8 +4,10 @@
   "description": "Full Stack Open - osa 5",
   "main": "index.js",
   "scripts": {
+    "start:ui": "react-scripts start",
     "start:api": "node ./api/index",
     "dev:api": "nodemon ./api/index",
+    "build": "react-scripts build",
     "lint": "eslint .",
     "test:api": "NODE_ENV=test jest --verbose --detectOpenHandles"
   },
