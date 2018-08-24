@@ -1,0 +1,44 @@
+{
+  "name": "fullstack-open-osa-5",
+  "version": "1.0.0",
+  "description": "Full Stack Open - osa 5",
+  "main": "index.js",
+  "scripts": {
+    "start:api": "node ./api/index",
+    "dev:api": "nodemon ./api/index",
+    "lint": "eslint .",
+    "test:api": "NODE_ENV=test jest --verbose --detectOpenHandles"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/villeristi/full-stack-open.git"
+  },
+  "author": "Wille <villeristimaki@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/villeristi/full-stack-open/issues"
+  },
+  "homepage": "https://github.com/villeristi/full-stack-open#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "bcrypt": "^3.0.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
+    "mongoose": "^5.2.9",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17"
+  },
+  "devDependencies": {
+    "eslint": "^5.4.0",
+    "jest": "^23.5.0",
+    "mockingoose": "^2.10.1",
+    "nodemon": "^1.18.3",
+    "supertest": "^3.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
