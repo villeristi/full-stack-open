@@ -1,8 +1,16 @@
+const supertest = require('supertest')
 const { chain, countBy } = require('lodash')
 
-const Blog = require('../../config/models')
+const app = require('../../index')
+const api = supertest(app)
+
+const { Blog, User } = require('../../config/models')
 
 module.exports = {
+
+  getApp() {
+    return api
+  },
 
   totalLikes(blogData = []) {
     return blogData.reduce((a, { likes }) => a + likes, 0)
@@ -60,7 +68,7 @@ module.exports = {
     ]
   },
 
-  async addInitial() {
+  async addInitialBlogs() {
     const initialBlogs = [
       {
         title: "asd",
@@ -78,7 +86,32 @@ module.exports = {
     })
   },
 
-  tearDown() {
+  async addInitialUsers() {
+    const initialUsers = [
+      {
+        name: "asd",
+        username: "asd",
+        password: "1234"
+      },
+      {
+        name: "asdasd",
+        username: "asdasd",
+        password: "1234",
+        adult: false,
+      }
+    ]
+
+    return initialUsers.forEach(async (userData) => {
+      const user = new User(userData)
+      await user.save()
+    })
+  },
+
+  tearDownBlogs() {
     return Blog.deleteMany({})
+  },
+
+  tearDownUsers() {
+    return User.deleteMany({})
   }
 }

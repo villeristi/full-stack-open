@@ -1,4 +1,4 @@
-const blogService = require('../services/blogService')
+const blogService = require('../../services/blogService')
 
 module.exports = async (req, res) => {
   await blogService.delete(req.params.id)

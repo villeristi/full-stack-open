@@ -4,22 +4,27 @@ const cors = require('cors')
 const router = express.Router()
 
 const db = require('./config/db')
-const ctrls = require('./controllers')
+const blogCtrls = require('./controllers/blog')
+const userCtrls = require('./controllers/user')
 
 db.connect()
 
 router.route('/api/blogs/:id?')
-  .get(ctrls.get)
-  .post(ctrls.post)
-  .put(ctrls.put)
-  .delete(ctrls.del)
+  .get(blogCtrls.get)
+  .post(blogCtrls.post)
+  .put(blogCtrls.put)
+  .delete(blogCtrls.del)
+
+router.route('/api/users')
+  .get(userCtrls.get)
+  .post(userCtrls.post)
 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router);
 
-const PORT = process.env.PORT || 3003
-const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+const PORT = process.env.NODE_ENV !== 'test' ? process.env.PORT || 3003 : null
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 
-module.exports = { app, server }
+module.exports = app

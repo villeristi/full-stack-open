@@ -1,4 +1,4 @@
-const Blog = require('../config/models')
+const { Blog } = require('../config/models')
 
 module.exports = {
   getAll() {

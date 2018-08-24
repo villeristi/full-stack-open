@@ -1,22 +1,19 @@
-const supertest = require('supertest')
-
-const { app, server } = require('../index')
 const listHelper = require('./util/listHelper')
-const api = supertest(app)
+
+const app = listHelper.getApp()
 
 describe('Blog  API', () => {
 
   beforeAll(async () => {
-    await listHelper.addInitial()
+    await listHelper.addInitialBlogs()
   })
 
   afterAll(async () => {
-    await listHelper.tearDown()
-    server.close()
+    await listHelper.tearDownBlogs()
   })
 
   test('Blogs are returned as json', async () => {
-    return await api
+    return await app
       .get('/api/blogs')
       .expect(200)
       .expect('Content-Type', /application\/json/)
@@ -24,7 +21,7 @@ describe('Blog  API', () => {
 
   test('New blogs can be added', async () => {
 
-    return await api
+    return await app
       .post('/api/blogs')
       .send(listHelper.getDummyBlogs()[0])
       .set('Accept', 'application/json')
@@ -34,7 +31,7 @@ describe('Blog  API', () => {
 
   test('Blog likes default to 0', async () => {
 
-    return await api
+    return await app
       .post('/api/blogs')
       .send(listHelper.getDummyBlogs()[1])
       .set('Accept', 'application/json')
@@ -46,7 +43,7 @@ describe('Blog  API', () => {
   })
 
   test('Blog should have required fields', async () => {
-    return await api
+    return await app
       .post('/api/blogs')
       .send({})
       .set('Accept', 'application/json')
@@ -63,7 +60,7 @@ describe('Blog  API', () => {
       likes: blog.likes,
     }
 
-    return await api
+    return await app
       .put(`/api/blogs/${blog._id}`)
       .send(updated)
       .set('Accept', 'application/json')
@@ -78,7 +75,7 @@ describe('Blog  API', () => {
   test('Blogs can be deleted', async() => {
     const blog = await listHelper.getOne()
 
-    return await api
+    return await app
       .delete(`/api/blogs/${blog._id}`)
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)

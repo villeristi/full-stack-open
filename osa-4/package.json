@@ -7,7 +7,7 @@
     "start": "node index",
     "dev": "nodemon index",
     "lint": "eslint .",
-    "test": "jest --verbose --detectOpenHandles"
+    "test": "NODE_ENV=test jest --verbose --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/villeristi/full-stack-open#readme",
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "lodash": "^4.17.10",
