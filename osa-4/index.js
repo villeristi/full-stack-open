@@ -8,9 +8,10 @@ const ctrls = require('./controllers')
 
 db.connect()
 
-router.route('/api/blogs')
+router.route('/api/blogs/:id?')
   .get(ctrls.get)
   .post(ctrls.post)
+  .delete(ctrls.del)
 
 app.use(cors())
 app.use(express.json());

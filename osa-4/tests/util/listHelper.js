@@ -38,11 +38,15 @@ module.exports = {
     return { author: mostActive, blogCount }
   },
 
-  blogsInDb() {
-    return Blog.find({})
+  async blogsInDb() {
+    return await Blog.find({})
   },
 
-  getDummyBlog() {
+  async getOne() {
+    return await Blog.findOne()
+  },
+
+  getDummyBlogs() {
     return [
       {
         title: "asd",

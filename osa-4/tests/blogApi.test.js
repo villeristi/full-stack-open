@@ -26,7 +26,7 @@ describe('Blog  API', () => {
 
     return await api
       .post('/api/blogs')
-      .send(listHelper.getDummyBlog()[0])
+      .send(listHelper.getDummyBlogs()[0])
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(201)
@@ -36,7 +36,7 @@ describe('Blog  API', () => {
 
     return await api
       .post('/api/blogs')
-      .send(listHelper.getDummyBlog()[1])
+      .send(listHelper.getDummyBlogs()[1])
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(201)
@@ -52,5 +52,15 @@ describe('Blog  API', () => {
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(400)
+  })
+
+  test('Blogs can be deleted', async() => {
+    const blog = await listHelper.getOne()
+
+    return await api
+      .delete(`/api/blogs/${blog._id}`)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
   })
 })

@@ -8,5 +8,9 @@ module.exports = {
   create(data) {
     const blog = new Blog(data)
     return blog.save()
+  },
+
+  async delete(_id) {
+    return await Blog.deleteOne({ _id })
   }
 }
