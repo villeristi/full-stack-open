@@ -11,13 +11,14 @@ const post = async (req, res) => {
   }
 
   try {
+    await userService.validate(userData)
     userData.password = await createHash(userData.password)
     const data = await userService.create(userData)
 
     return res.status(201).json(data)
   } catch (e) {
-    const status = e.name && e.name === 'ValidationError' ? 401 : 500
-    return res.status(status).json(e)
+    const status = e.name && e.name === 'ValidationError' ? 400 : 500
+    return res.status(status).json({ msg: e.message })
   }
 }
 

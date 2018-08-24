@@ -72,4 +72,19 @@ describe.only('User API', () => {
       .expect(400)
       .expect('Content-Type', /application\/json/)
   })
+
+  test('Username must be unique', async () => {
+
+    const user = {
+      name: "asd",
+      username: "asd",
+      password: "1234"
+    }
+
+    return await app
+      .post('/api/users')
+      .send(user)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+  })
 })

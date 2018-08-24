@@ -2,7 +2,7 @@ const { Blog } = require('../config/models')
 
 module.exports = {
   getAll() {
-    return Blog.find()
+    return Blog.find({}).populate('user')
   },
 
   create(data) {

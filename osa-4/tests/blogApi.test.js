@@ -1,3 +1,4 @@
+const { User } = require('../config/models')
 const listHelper = require('./util/listHelper')
 
 const app = listHelper.getApp()
@@ -17,6 +18,27 @@ describe('Blog  API', () => {
       .get('/api/blogs')
       .expect(200)
       .expect('Content-Type', /application\/json/)
+  })
+
+  test('Created blog has user defined', async () => {
+    const blogUser = new User({
+      name: 'bloguser',
+      username: 'bloguser',
+      password: '1234'
+    })
+
+    const { id } = await blogUser.save()
+
+    await app
+      .post('/api/blogs')
+      .send(listHelper.getDummyBlogs()[0])
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .expect(({ body }) => {
+        expect(body.user).toBeTruthy()
+        return User.deleteOne({ _id: id })
+      })
   })
 
   test('New blogs can be added', async () => {

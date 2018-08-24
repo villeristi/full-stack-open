@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const ValidationError = require('./errors')
+
 const BlogSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -12,17 +14,22 @@ const BlogSchema = new mongoose.Schema({
   likes: {
     type: Number,
     required: false,
-    default: 0
-  }
+    default: 0,
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
 }, {
     // Format responses
     toJSON: {
-      transform(doc, {_id, author, title, likes}) {
+      transform(doc, { _id, author, title, likes, user }) {
         return {
           id: _id,
           title,
           author,
-          likes
+          likes,
+          user,
         }
       }
     }
@@ -44,31 +51,39 @@ const UserSchema = new mongoose.Schema({
   adult: {
     type: Boolean,
     required: false,
-    default: true
-  }
+    default: true,
+  },
+  blogs: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Blog'
+  }]
+
 }, {
     // Format responses
     toJSON: {
-      transform(doc, {_id, username, name, adult}) {
+      transform(doc, { _id, username, name, adult, blogs }) {
         return {
           id: _id,
           username,
           name,
-          adult
+          adult,
+          blogs,
         }
       }
     }
 })
 
-UserSchema.path('username').validate({
-  async validator(username) {
-    const count = await this.model('User').count({ username })
-    return count === 0
-  },
+UserSchema.statics = {
+  async validate({ username }) {
+    const user = await this.find({ username })
 
-  message: 'Käyttäjätunnus `{VALUE}` löytyy jo tietokannasta!'
-});
+    if( user.length ){
+      throw new ValidationError(`Käyttäjänimi ${username} on jo olemassa!`)
+    }
 
+    return true
+  }
+}
 
 module.exports = {
   Blog: mongoose.model('Blog', BlogSchema),
