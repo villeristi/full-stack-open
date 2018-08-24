@@ -10,6 +10,10 @@ module.exports = {
     return blog.save()
   },
 
+  async update(id, data) {
+    return Blog.findByIdAndUpdate(id, { ...data }, { new: true })
+  },
+
   async delete(_id) {
     return await Blog.deleteOne({ _id })
   }

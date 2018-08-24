@@ -54,6 +54,27 @@ describe('Blog  API', () => {
       .expect(400)
   })
 
+  test('Blogs can be updated', async() => {
+    const blog = await listHelper.getOne()
+    const oldAuthor = blog.author
+    const updated = {
+      author: 'Somethings elses',
+      title: blog.title,
+      likes: blog.likes,
+    }
+
+    return await api
+      .put(`/api/blogs/${blog._id}`)
+      .send(updated)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .expect(({ body }) => {
+        expect(body.author).not.toBe(oldAuthor)
+        expect(body.author).toBe(updated.author)
+      })
+  })
+
   test('Blogs can be deleted', async() => {
     const blog = await listHelper.getOne()
 

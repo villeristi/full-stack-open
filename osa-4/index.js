@@ -11,6 +11,7 @@ db.connect()
 router.route('/api/blogs/:id?')
   .get(ctrls.get)
   .post(ctrls.post)
+  .put(ctrls.put)
   .delete(ctrls.del)
 
 app.use(cors())
