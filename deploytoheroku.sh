@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Because I'm lazy...
 
 if [ -n "$@" ]; then
