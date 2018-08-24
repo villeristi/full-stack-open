@@ -69,18 +69,7 @@ module.exports = {
   },
 
   async addInitialBlogs(user) {
-    const initialBlogs = [
-      {
-        title: "asd",
-        author: "asd"
-      },
-      {
-        title: "asdasd",
-        author: "asdasd"
-      }
-    ]
-
-    return initialBlogs.forEach(async (blogData) => {
+    return this.getDummyBlogs().forEach(async (blogData) => {
       blogData.user = user._id
       await Blog.create(blogData)
     })
