@@ -68,7 +68,7 @@ module.exports = {
     ]
   },
 
-  async addInitialBlogs() {
+  async addInitialBlogs(user) {
     const initialBlogs = [
       {
         title: "asd",
@@ -81,8 +81,8 @@ module.exports = {
     ]
 
     return initialBlogs.forEach(async (blogData) => {
-      const blog = new Blog(blogData)
-      await blog.save()
+      blogData.user = user._id
+      await Blog.create(blogData)
     })
   },
 

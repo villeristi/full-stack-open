@@ -5,6 +5,10 @@ module.exports = {
     return Blog.find({}).populate('user')
   },
 
+  get(id) {
+    return Blog.findById(id)
+  },
+
   create(data) {
     const blog = new Blog(data)
     return blog.save()

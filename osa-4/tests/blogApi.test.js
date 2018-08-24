@@ -1,12 +1,25 @@
+const jwt = require('jsonwebtoken')
+
 const { User } = require('../config/models')
 const listHelper = require('./util/listHelper')
 
 const app = listHelper.getApp()
 
+const testUser = {
+  name: 'testing',
+  username: 'testing',
+  password: '1234'
+}
+
 describe('Blog  API', () => {
 
+  let token
+
   beforeAll(async () => {
-    await listHelper.addInitialBlogs()
+
+    const user = await User.create(testUser)
+    token = jwt.sign({ username: user.username, id: user._id }, process.env.SECRET)
+    await listHelper.addInitialBlogs(user)
   })
 
   afterAll(async () => {
@@ -21,23 +34,15 @@ describe('Blog  API', () => {
   })
 
   test('Created blog has user defined', async () => {
-    const blogUser = new User({
-      name: 'bloguser',
-      username: 'bloguser',
-      password: '1234'
-    })
-
-    const { id } = await blogUser.save()
-
     await app
       .post('/api/blogs')
       .send(listHelper.getDummyBlogs()[0])
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .expect('Content-Type', /json/)
       .expect(201)
       .expect(({ body }) => {
         expect(body.user).toBeTruthy()
-        return User.deleteOne({ _id: id })
       })
   })
 
@@ -47,6 +52,7 @@ describe('Blog  API', () => {
       .post('/api/blogs')
       .send(listHelper.getDummyBlogs()[0])
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .expect('Content-Type', /json/)
       .expect(201)
   })
@@ -57,6 +63,7 @@ describe('Blog  API', () => {
       .post('/api/blogs')
       .send(listHelper.getDummyBlogs()[1])
       .set('Accept', 'application/json')
+      .set('Authorization', `Bearer ${token}`)
       .expect('Content-Type', /json/)
       .expect(201)
       .expect(({ body }) => {
@@ -68,6 +75,7 @@ describe('Blog  API', () => {
     return await app
       .post('/api/blogs')
       .send({})
+      .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(400)
@@ -99,6 +107,7 @@ describe('Blog  API', () => {
 
     return await app
       .delete(`/api/blogs/${blog._id}`)
+      .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200)

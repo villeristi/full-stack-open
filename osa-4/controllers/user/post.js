@@ -1,4 +1,3 @@
-const { createHash } = require('../../config/helpers')
 const userService = require('../../services/userService')
 
 const MIN_PWD_LENGTH = 3
@@ -12,7 +11,6 @@ const post = async (req, res) => {
 
   try {
     await userService.validate(userData)
-    userData.password = await createHash(userData.password)
     const data = await userService.create(userData)
 
     return res.status(201).json(data)

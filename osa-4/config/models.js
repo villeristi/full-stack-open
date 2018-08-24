@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+const { createHash } = require('../config/helpers')
 const ValidationError = require('./errors')
 
 const BlogSchema = new mongoose.Schema({
@@ -71,6 +72,19 @@ const UserSchema = new mongoose.Schema({
         }
       }
     }
+})
+
+UserSchema.pre('save', async function(next) {
+  const user = this;
+
+  // only hash the password if it has been modified (or is new)
+  if (!user.isModified('password')) {
+    return next();
+  }
+
+  const hash = await createHash(user.password)
+  user.password = hash
+  next()
 })
 
 UserSchema.statics = {

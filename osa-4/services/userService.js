@@ -9,6 +9,10 @@ module.exports = {
     return User.findById(id)
   },
 
+  findBy(condition) {
+    return User.findOne(condition)
+  },
+
   create(data) {
     const user = new User(data)
     return user.save()
