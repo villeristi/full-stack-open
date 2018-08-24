@@ -1,7 +1,7 @@
 const listHelper = require('./util/listHelper')
 const dummyBlogs = require('./util/blogs')
 
-describe('List helpers', () => {
+describe.skip('List helpers', () => {
   describe('total likes', () => {
     test('Calculate total likes of all blogs', () => {
       const result = listHelper.totalLikes(dummyBlogs)

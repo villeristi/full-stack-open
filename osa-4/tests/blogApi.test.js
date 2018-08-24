@@ -1,8 +1,20 @@
 const supertest = require('supertest')
+
 const { app, server } = require('../index')
+const listHelper = require('./util/listHelper')
 const api = supertest(app)
 
 describe('Blog  API', () => {
+
+  beforeAll(async () => {
+    await listHelper.addInitial()
+  })
+
+  afterAll(async () => {
+    await listHelper.tearDown()
+    server.close()
+  })
+
   test('Blogs are returned as json', async () => {
     return await api
       .get('/api/blogs')
@@ -12,15 +24,9 @@ describe('Blog  API', () => {
 
   test('New blogs can be added', async () => {
 
-    const dummy = {
-      title: 'asd',
-      author: 'asd',
-      likes: 123
-    }
-
     return await api
       .post('/api/blogs')
-      .send(dummy)
+      .send(listHelper.getDummyBlog()[0])
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(201)
@@ -28,14 +34,9 @@ describe('Blog  API', () => {
 
   test('Blog likes default to 0', async () => {
 
-    const dummy = {
-      title: 'asd',
-      author: 'asd'
-    }
-
     return await api
       .post('/api/blogs')
-      .send(dummy)
+      .send(listHelper.getDummyBlog()[1])
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(201)
@@ -51,9 +52,5 @@ describe('Blog  API', () => {
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(400)
-  })
-
-  afterAll(() => {
-    server.close()
   })
 })
