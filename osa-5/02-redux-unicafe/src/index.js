@@ -1,8 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+import { createStore } from 'redux'
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-)
+import App from './App'
+import rootStore from './store'
+
+const store = createStore(rootStore)
+
+const render = () => {
+  ReactDOM.render(
+    <App store={store} />,
+    document.getElementById('root')
+  )
+}
+
+render()
+store.subscribe(render)

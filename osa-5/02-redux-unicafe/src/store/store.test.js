@@ -21,7 +21,7 @@ describe('unicafe reducer', () => {
 
   test('Good is incremented', () => {
     const action = {
-      type: 'GOOD'
+      type: VALUES.good.value.toUpperCase()
     }
 
     deepFreeze(state)
@@ -35,7 +35,7 @@ describe('unicafe reducer', () => {
 
   it('Neutral is incremented', () => {
     const action = {
-      type: 'OK'
+      type: VALUES.neutral.value.toUpperCase()
     }
 
     deepFreeze(state)
@@ -49,7 +49,7 @@ describe('unicafe reducer', () => {
 
   test('Bad is incremented', () => {
     const action = {
-      type: 'BAD'
+      type: VALUES.bad.value.toUpperCase()
     }
 
     deepFreeze(state)

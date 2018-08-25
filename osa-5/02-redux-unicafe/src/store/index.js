@@ -8,16 +8,17 @@ export const initialState = {
 
 const counterReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GOOD':
+    case VALUES.good.value.toUpperCase():
       return {...state, [VALUES.good.value]: state[VALUES.good.value] + 1}
-    case 'OK':
+    case VALUES.neutral.value.toUpperCase():
       return {...state, [VALUES.neutral.value]: state[VALUES.neutral.value] + 1}
-    case 'BAD':
+    case VALUES.bad.value.toUpperCase():
       return {...state, [VALUES.bad.value]: state[VALUES.bad.value] + 1}
     case 'ZERO':
       return state
+    default:
+      return state
   }
-  return state
 }
 
 export default counterReducer
