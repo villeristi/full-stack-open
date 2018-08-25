@@ -153,17 +153,19 @@ class App extends React.Component {
           visible={displayNewForm}
         />
 
-        {blogs.map((blog) => {
-          return (
-            <Togglable key={blog.id} title={`${blog.title}, ${blog.author}`}>
-              <Blog
-                blog={blog}
-                handleLike={() => this.handleLike(blog)}
-                handleDelete={() => this.handleDelete(blog)}
-              />
-            </Togglable>
-          )
-        })}
+        <div className="blogs-container">
+          {blogs.map((blog) => {
+            return (
+              <Togglable key={blog.id} title={`${blog.title}, ${blog.author}`}>
+                <Blog
+                  blog={blog}
+                  handleLike={() => this.handleLike(blog)}
+                  handleDelete={() => this.handleDelete(blog)}
+                />
+              </Togglable>
+            )
+          })}
+        </div>
       </div>
     );
   }
