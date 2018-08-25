@@ -20,16 +20,17 @@ export default class CreateNewBlogForm extends React.Component {
 
   handleSubmit = async (e) => {
     const { newBlog } = this.state
-    const { fetchBlogs, handleError } = this.props
+    const { fetchBlogs, displayNotification } = this.props
     e.preventDefault()
 
     try {
       await blogService.create(newBlog)
       this.clearFields()
+      displayNotification(`A new blog '${newBlog.title}' by ${newBlog.author} added!`, 'success')
       return await fetchBlogs()
     } catch(e) {
       this.clearFields()
-      return handleError(e.message)
+      return displayNotification(e.message)
     }
   }
 

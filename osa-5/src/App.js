@@ -4,6 +4,7 @@ import * as blogService from './services/blogService'
 import * as authService from './services/authService'
 import * as storage from './util/localStorage'
 
+import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Blog from './components/Blog'
 import CreateNewBlogForm from './components/CreateBlogForm';
@@ -13,7 +14,7 @@ const baseState = {
   username: '',
   password: '',
   user: null,
-  error: null
+  notification: null
 }
 
 class App extends React.Component {
@@ -58,7 +59,7 @@ class App extends React.Component {
 
     } catch(e) {
       this.clearFields()
-      this.displayError('käyttäjätunnus tai salasana virheellinen')
+      this.displayNotification('käyttäjätunnus tai salasana virheellinen')
     }
   }
 
@@ -83,34 +84,38 @@ class App extends React.Component {
     })
   }
 
-  displayError = (error) => {
-    this.setState({ error }, () => {
-      setTimeout(() => this.setState({ error: null }), 3000)
+  displayNotification = (msg, status = 'error') => {
+    this.setState({ notification: { msg, status } }, () => {
+      setTimeout(() => this.setState({ notification: null }), 3000)
     })
   }
 
   render() {
-    const { user, blogs } = this.state
+    const { user, blogs, notification } = this.state
 
     if(!user) {
       return (
-        <LoginForm
-          handleNameChange={this.handleFieldChange}
-          handlePwdChange={this.handleFieldChange}
-          handleLogin={this.handleLogin}
-          username={this.state.username}
-          password={this.state.password}
-        />
+        <div>
+          {notification && <Notification msg={notification.msg} status={notification.status} />}
+          <LoginForm
+            handleNameChange={this.handleFieldChange}
+            handlePwdChange={this.handleFieldChange}
+            handleLogin={this.handleLogin}
+            username={this.state.username}
+            password={this.state.password}
+          />
+        </div>
       )
     }
 
     return (
       <div>
-        <h2>blogs</h2>
+        {notification && <Notification msg={notification.msg} status={notification.status} />}
+        <h1>Blogs</h1>
         <p>{user.name} logged in <button onClick={this.handleLogout}>logout</button></p>
 
         <CreateNewBlogForm
-          handleError={this.displayError}
+          displayNotification={this.displayNotification}
           fetchBlogs={this.fetchBlogs}
         />
 
