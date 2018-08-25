@@ -1,20 +1,31 @@
 import React from 'react'
 
-import blogService from './services/blogService'
-import authService from './services/authService'
+import * as blogService from './services/blogService'
+import * as authService from './services/authService'
+import * as storage from './util/localStorage'
 
 import LoginForm from './components/LoginForm'
 import Blog from './components/Blog'
 
+const baseState = {
+  blogs: [],
+  username: '',
+  password: '',
+  user: null,
+  error: null
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      blogs: [],
-      username: '',
-      password: '',
-      user: null,
-      error: null
+    this.state = baseState
+  }
+
+  componentWillMount() {
+    const user = storage.get('user')
+
+    if(user) {
+      this.setState({ user })
     }
   }
 
@@ -31,7 +42,7 @@ class App extends React.Component {
     return this.setState({ blogs })
   }
 
-  login = async (e) => {
+  handleLogin = async (e) => {
     e.preventDefault()
     const { username, password } = this.state
 
@@ -47,6 +58,15 @@ class App extends React.Component {
     } catch(e) {
       this.clearFields()
       this.displayError('käyttäjätunnus tai salasana virheellinen')
+    }
+  }
+
+  handleLogout = async () => {
+    try {
+      await authService.logout()
+      this.setState(baseState)
+    } catch(e) {
+      return this.displayError(e)
     }
   }
 
@@ -76,7 +96,7 @@ class App extends React.Component {
         <LoginForm
           handleNameChange={this.handleFieldChange}
           handlePwdChange={this.handleFieldChange}
-          handleLogin={this.login}
+          handleLogin={this.handleLogin}
           username={this.state.username}
           password={this.state.password}
         />
@@ -86,7 +106,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>blogs</h2>
-        {user && (<p>{user.name} logged in</p>)}
+        {user && (<p>{user.name} logged in <button onClick={this.handleLogout}>logout</button></p>)}
         {blogs.map(blog => <Blog key={blog.id} blog={blog}/> )}
       </div>
     );
