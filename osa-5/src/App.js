@@ -6,6 +6,7 @@ import * as storage from './util/localStorage'
 
 import LoginForm from './components/LoginForm'
 import Blog from './components/Blog'
+import CreateNewBlogForm from './components/CreateBlogForm';
 
 const baseState = {
   blogs: [],
@@ -106,7 +107,13 @@ class App extends React.Component {
     return (
       <div>
         <h2>blogs</h2>
-        {user && (<p>{user.name} logged in <button onClick={this.handleLogout}>logout</button></p>)}
+        <p>{user.name} logged in <button onClick={this.handleLogout}>logout</button></p>
+
+        <CreateNewBlogForm
+          handleError={this.displayError}
+          fetchBlogs={this.fetchBlogs}
+        />
+
         {blogs.map(blog => <Blog key={blog.id} blog={blog}/> )}
       </div>
     );

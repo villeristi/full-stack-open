@@ -12,6 +12,10 @@ const BlogSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  url: {
+    type: String,
+    required: true,
+  },
   likes: {
     type: Number,
     required: false,
@@ -24,11 +28,12 @@ const BlogSchema = new mongoose.Schema({
 }, {
     // Format responses
     toJSON: {
-      transform(doc, { _id, author, title, likes, user }) {
+      transform(doc, { _id, author, title, url, likes, user }) {
         return {
           id: _id,
           title,
           author,
+          url,
           likes,
           user,
         }
