@@ -9,7 +9,7 @@ const Blog = ({ blog, handleLike, handleDelete }) => (
     <a href={blog.url} target="_blank">{blog.url}</a>
     <p>{blog.likes} like <button onClick={handleLike}>like</button></p>
     {blog.user && <p>By {blog.user.name}</p>}
-    {currentUser.username === blog.user.username && <button onClick={handleDelete}>delete</button>}
+    {currentUser && currentUser.username === blog.user.username && <button onClick={handleDelete}>delete</button>}
   </div>
 )
 
