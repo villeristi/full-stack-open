@@ -1,7 +1,7 @@
 {
-  "name": "fullstack-open-osa-5",
+  "name": "fullstack-open-osa-5-bloglist-frontend",
   "version": "1.0.0",
-  "description": "Full Stack Open - osa 5",
+  "description": "Full Stack Open - osa 5 bloglist front-end",
   "main": "index.js",
   "scripts": {
     "start:ui": "react-scripts start",

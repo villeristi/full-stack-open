@@ -1,5 +1,5 @@
 {
-  "name": "02-puhelinluettelo",
+  "name": "fullstack-open-osa-2-puhelinluettelo-crud",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
