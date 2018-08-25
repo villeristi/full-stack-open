@@ -73,6 +73,16 @@ class App extends React.Component {
     }
   }
 
+  handleLike = async (blogData) => {
+    const { blogs } = this.state
+    const index = this.state.blogs.indexOf(blogData)
+    const data = await blogService.like({...blogData, likes: blogData.likes + 1})
+
+    blogs[index] = data
+
+    return this.setState({ blogs: [...blogs] })
+  }
+
   handleFieldChange = (e) => {
     const name = e.target.name
     this.setState({ [name]: e.target.value })
@@ -120,7 +130,13 @@ class App extends React.Component {
           fetchBlogs={this.fetchBlogs}
         />
 
-        {blogs.map((blog) => <Togglable key={blog.id} title={`${blog.title}, ${blog.author}`}><Blog blog={blog}/></Togglable> )}
+        {blogs.map((blog) => {
+          return (
+            <Togglable key={blog.id} title={`${blog.title}, ${blog.author}`}>
+              <Blog blog={blog} handleLike={() => this.handleLike(blog)} />
+            </Togglable>
+          )
+        })}
       </div>
     );
   }

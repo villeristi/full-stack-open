@@ -1,4 +1,4 @@
-import axios, { get, post } from 'axios'
+import axios, { get, post, put } from 'axios'
 import { API_URL } from './constants'
 import * as storage from '../util/localStorage'
 
@@ -14,5 +14,12 @@ export const getAll = async () => {
 
 export const create = async (blogData) => {
   const { data } = await post(`${API_URL}/blogs`, blogData)
+  return data
+}
+
+export const like = async (blogData) => {
+  delete blogData.user
+  const { data } = await put(`${API_URL}/blogs/${blogData.id}`, blogData)
+
   return data
 }

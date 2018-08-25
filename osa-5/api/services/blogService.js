@@ -15,7 +15,7 @@ module.exports = {
   },
 
   async update(id, data) {
-    return Blog.findByIdAndUpdate(id, { ...data }, { new: true })
+    return Blog.findByIdAndUpdate(id, { ...data }, { new: true }).populate('user')
   },
 
   async delete(_id) {
