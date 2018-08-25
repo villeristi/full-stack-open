@@ -4,10 +4,11 @@ import * as blogService from './services/blogService'
 import * as authService from './services/authService'
 import * as storage from './util/localStorage'
 
+import CreateNewBlogForm from './components/CreateBlogForm';
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
+import Togglable from './components/Togglable'
 import Blog from './components/Blog'
-import CreateNewBlogForm from './components/CreateBlogForm';
 
 const baseState = {
   blogs: [],
@@ -119,7 +120,7 @@ class App extends React.Component {
           fetchBlogs={this.fetchBlogs}
         />
 
-        {blogs.map(blog => <Blog key={blog.id} blog={blog}/> )}
+        {blogs.map((blog) => <Togglable key={blog.id} title={`${blog.title}, ${blog.author}`}><Blog blog={blog}/></Togglable> )}
       </div>
     );
   }
