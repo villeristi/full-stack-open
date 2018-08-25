@@ -1,4 +1,4 @@
-import axios, { get, post, put } from 'axios'
+import axios, { get, post, put, delete as del } from 'axios'
 import { API_URL } from './constants'
 import * as storage from '../util/localStorage'
 
@@ -14,6 +14,11 @@ export const getAll = async () => {
 
 export const create = async (blogData) => {
   const { data } = await post(`${API_URL}/blogs`, blogData)
+  return data
+}
+
+export const remove = async (id) => {
+  const { data } = await del(`${API_URL}/blogs/${id}`)
   return data
 }
 

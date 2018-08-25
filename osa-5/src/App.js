@@ -15,7 +15,8 @@ const baseState = {
   username: '',
   password: '',
   user: null,
-  notification: null
+  notification: null,
+  displayNewForm: false,
 }
 
 class App extends React.Component {
@@ -69,7 +70,7 @@ class App extends React.Component {
       await authService.logout()
       this.setState(baseState)
     } catch(e) {
-      return this.displayError(e)
+      return this.displayNotification(e)
     }
   }
 
@@ -81,6 +82,19 @@ class App extends React.Component {
     blogs[index] = data
 
     return this.setState({ blogs: [...blogs] })
+  }
+
+  handleDelete = async (blog) => {
+    const really = window.confirm('Are you sure you want to delete this blog?')
+
+    if(really) {
+      try {
+        await blogService.remove(blog.id)
+        return this.fetchBlogs()
+      } catch (e) {
+        return this.displayNotification(e.message)
+      }
+    }
   }
 
   handleFieldChange = (e) => {
@@ -95,6 +109,10 @@ class App extends React.Component {
     })
   }
 
+  toggleCreateForm = () => {
+    return this.setState({ displayNewForm: !this.state.displayNewForm })
+  }
+
   displayNotification = (msg, status = 'error') => {
     this.setState({ notification: { msg, status } }, () => {
       setTimeout(() => this.setState({ notification: null }), 3000)
@@ -102,7 +120,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { user, blogs, notification } = this.state
+    const { user, blogs, notification, displayNewForm } = this.state
     blogs.sort((a, b) => (a.likes < b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0))
 
     if(!user) {
@@ -126,15 +144,23 @@ class App extends React.Component {
         <h1>Blogs</h1>
         <p>{user.name} logged in <button onClick={this.handleLogout}>logout</button></p>
 
+        {!displayNewForm && <button onClick={this.toggleCreateForm}>create new</button>}
+
         <CreateNewBlogForm
           displayNotification={this.displayNotification}
           fetchBlogs={this.fetchBlogs}
+          toggle={this.toggleCreateForm}
+          visible={displayNewForm}
         />
 
         {blogs.map((blog) => {
           return (
             <Togglable key={blog.id} title={`${blog.title}, ${blog.author}`}>
-              <Blog blog={blog} handleLike={() => this.handleLike(blog)} />
+              <Blog
+                blog={blog}
+                handleLike={() => this.handleLike(blog)}
+                handleDelete={() => this.handleDelete(blog)}
+              />
             </Togglable>
           )
         })}

@@ -45,40 +45,49 @@ export default class CreateNewBlogForm extends React.Component {
 
   render() {
 
+    const { toggle, visible } = this.props
     const { author, title, url } = this.state.newBlog
 
+    if(!visible) {
+      return null
+    }
+
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h2>Create new blog</h2>
-        <div>
-          title
-          <input
-            type="text"
-            name="title"
-            value={title}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div>
-          author
-          <input
-            type="text"
-            name="author"
-            value={author}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div>
-          url
-          <input
-            type="text"
-            name="url"
-            value={url}
-            onChange={this.handleChange}
-          />
-        </div>
-        <button type="submit">Create</button>
-      </form>
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <h2>Create new blog</h2>
+          <div>
+            title
+            <input
+              type="text"
+              name="title"
+              value={title}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            author
+            <input
+              type="text"
+              name="author"
+              value={author}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            url
+            <input
+              type="text"
+              name="url"
+              value={url}
+              onChange={this.handleChange}
+            />
+          </div>
+          <button type="submit">Create</button>
+        </form>
+
+        <button onClick={toggle}>close</button>
+      </div>
     )
   }
 }
