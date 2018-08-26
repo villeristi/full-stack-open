@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, Route, NavLink, Link } from 'react-router-dom'
 
 const Menu = () => {
   const style = {
@@ -18,9 +18,13 @@ const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(anecdote => <li key={anecdote.id} ><Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link></li>)}
     </ul>
   </div>
+)
+
+const Anecdote = ({ anecdote }) => (
+  <p>{anecdote.content}</p>
 )
 
 const About = () => (
@@ -149,6 +153,7 @@ class App extends React.Component {
           <div>
             <Menu />
             <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
+            <Route path="/anecdotes/:id" render={({ match: { params: { id } } }) => <Anecdote anecdote={this.anecdoteById(id)} /> } />
             <Route exact path="/create" render={() => <CreateNew addNew={this.addNew}/> } />
             <Route exact path="/about" render={() => <About />} />
           </div>
