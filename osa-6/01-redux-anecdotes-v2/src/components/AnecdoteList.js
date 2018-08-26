@@ -1,15 +1,18 @@
 import React from 'react'
 
 import { voteAnecdote } from '../reducers/anecdoteReducer'
+import { addNotification } from '../reducers/notificationReducer'
 
 class AnecdoteList extends React.Component {
 
   handlevote = (item) => {
     this.props.store.dispatch(voteAnecdote(item))
+    this.props.store.dispatch(addNotification(`You voted ${item.content}`))
+
   }
 
   render() {
-    const anecdotes = this.props.store.getState()
+    const { anecdotes } = this.props.store.getState()
 
     return (
       <div>
