@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import { voteAnecdote } from '../reducers/anecdoteReducer'
 import { addNotification } from '../reducers/notificationReducer'
@@ -6,12 +7,12 @@ import { addNotification } from '../reducers/notificationReducer'
 class AnecdoteList extends React.Component {
 
   handlevote = (item) => {
-    this.props.store.dispatch(voteAnecdote(item))
-    this.props.store.dispatch(addNotification(`You voted ${item.content}`))
+    this.props.voteAnecdote(item)
+    this.props.addNotification(`You voted ${item.content}`)
   }
 
   render() {
-    const { anecdotes, filter } = this.props.store.getState()
+    const { anecdotes, filter } = this.props
     const filteredAnecdotes = anecdotes.filter((item) => item.content.toLowerCase().indexOf(filter) !== -1)
 
     return (
@@ -35,4 +36,9 @@ class AnecdoteList extends React.Component {
   }
 }
 
-export default AnecdoteList
+export default connect((state) => {
+  return {
+    anecdotes: state.anecdotes,
+    filter: state.filter,
+  }
+}, { voteAnecdote, addNotification })(AnecdoteList)

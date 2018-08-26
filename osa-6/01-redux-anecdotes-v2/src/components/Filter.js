@@ -1,18 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import { setFilter } from '../reducers/filterReducer'
 
-export default class Filter extends React.Component {
+class Filter extends React.Component {
 
   handleUpdate = (e) => {
-    const { store } = this.props
+    const { setFilter } = this.props
 
-    store.dispatch(setFilter(e.target.value))
+    setFilter(e.target.value)
   }
 
   render() {
 
-    const { filter } = this.props.store.getState()
+    const { filter } = this.props
 
     return(
       <div>
@@ -21,3 +22,10 @@ export default class Filter extends React.Component {
     )
   }
 }
+
+export default connect((state) => {
+  return {
+    filter: state.filter
+  }
+}, { setFilter })(Filter)
+
