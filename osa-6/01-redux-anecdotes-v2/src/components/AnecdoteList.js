@@ -12,8 +12,7 @@ class AnecdoteList extends React.Component {
   }
 
   render() {
-    const { anecdotes, filter } = this.props
-    const filteredAnecdotes = anecdotes.filter((item) => item.content.toLowerCase().indexOf(filter) !== -1)
+    const {filteredAnecdotes } = this.props
 
     return (
       <div>
@@ -38,7 +37,6 @@ class AnecdoteList extends React.Component {
 
 export default connect((state) => {
   return {
-    anecdotes: state.anecdotes,
-    filter: state.filter,
+    filteredAnecdotes: state.anecdotes.filter(item => item.content.toLowerCase().includes(state.filter)),
   }
 }, { voteAnecdote, addNotification })(AnecdoteList)
