@@ -18,9 +18,14 @@ class Login extends React.Component {
 
   componentDidMount() {
     const user = storage.get('user')
-    console.log('USER', user)
     if(user) {
       this.props.history.push('/')
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if( this.props.user === null && !!nextProps.user) {
+      return this.props.history.push('/')
     }
   }
 
@@ -33,7 +38,6 @@ class Login extends React.Component {
       this.clearFields()
       login({ username, password })
       history.push('/')
-
     } catch(e) {
       this.clearFields()
       this.displayNotification('käyttäjätunnus tai salasana virheellinen')
@@ -87,9 +91,9 @@ class Login extends React.Component {
 
 export default withRouter(
   connect(
-    (state) => {
+    ({ user }) => {
       return {
-
+        user,
       }
     },
     { login, logout }

@@ -18,7 +18,7 @@ const Root = () => (
             <Route exact path="/login" component={LoginForm} />
             <Route component={NotFound} />
         </Switch>
-        </div>
+      </div>
     </Router>
   </div>
 )

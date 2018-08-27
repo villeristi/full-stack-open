@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-
 import { login, logout, setUser } from './store/authReducer'
 import { fetchBlogs, removeBlog, likeBlog } from './store/blogReducer'
 
@@ -27,6 +26,10 @@ class App extends React.Component {
   async componentDidMount() {
     const { setUser, history } = this.props
     const user = storage.get('user')
+
+    if(!!this.props.user) {
+      return this.props.fetchBlogs()
+    }
 
     if(user) {
       return setUser(user)
@@ -55,10 +58,10 @@ class App extends React.Component {
   }
 
   handleLogout = async () => {
-    const { logout } = this.props
+    const { logout, history } = this.props
     try {
       logout()
-      this.setState(baseState)
+      return history.push('/login')
     } catch(e) {
       return this.displayNotification(e)
     }
@@ -75,14 +78,14 @@ class App extends React.Component {
   }
 
   render() {
-    const { blogs, user, logout } = this.props
+    const { blogs, user } = this.props
     const { notification, displayNewForm } = this.state
 
     return (
       <div>
         {notification && <Notification msg={notification.msg} status={notification.status} />}
         <h1>Blogs</h1>
-        <p>{!!user && user.name} logged in <button onClick={logout}>logout</button></p>
+        <p>{!!user && user.name} logged in <button onClick={this.handleLogout}>logout</button></p>
 
         {!displayNewForm && <button onClick={this.toggleCreateForm}>create new</button>}
 
