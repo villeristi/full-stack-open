@@ -1,13 +1,24 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import App from '../../App'
+import LoginForm from '../Login/LoginForm'
+
+const NotFound = () => {
+  return (
+    <div>Not found :(</div>
+  )
+}
 
 const Root = () => (
   <div>
     <Router>
       <div>
-        <Route exact path="/" component={App} />
-      </div>
+        <Switch>
+            <Route exact path="/" component={App} />
+            <Route exact path="/login" component={LoginForm} />
+            <Route component={NotFound} />
+        </Switch>
+        </div>
     </Router>
   </div>
 )

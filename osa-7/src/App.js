@@ -1,21 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+
 
 import { login, logout, setUser } from './store/authReducer'
 import { fetchBlogs, removeBlog, likeBlog } from './store/blogReducer'
 
-import * as authService from './services/authService'
 import * as storage from './util/localStorage'
 
 import CreateNewBlogForm from './components/CreateBlogForm';
 import Notification from './components/Notification'
-import LoginForm from './components/Login/LoginForm'
 import Togglable from './components/Togglable'
 import Blog from './components/Blog'
 
 const baseState = {
-  username: '',
-  password: '',
   notification: null,
   displayNewForm: false,
 }
@@ -27,42 +25,19 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-    const { setUser } = this.props
+    const { setUser, history } = this.props
     const user = storage.get('user')
 
     if(user) {
-      setUser(user)
+      return setUser(user)
     }
+
+    return history.push('/login')
   }
 
   componentWillReceiveProps(nextProps) {
     if( this.props.user === null && !!nextProps.user) {
       this.props.fetchBlogs()
-    }
-  }
-
-  handleLogin = async (e) => {
-    e.preventDefault()
-    const { username, password } = this.state
-    const { login } = this.props
-
-    try{
-      this.clearFields()
-      return login({ username, password })
-
-    } catch(e) {
-      console.log('asdasd')
-      this.clearFields()
-      this.displayNotification('käyttäjätunnus tai salasana virheellinen')
-    }
-  }
-
-  handleLogout = async () => {
-    try {
-      await authService.logout()
-      this.setState(baseState)
-    } catch(e) {
-      return this.displayNotification(e)
     }
   }
 
@@ -79,16 +54,14 @@ class App extends React.Component {
     }
   }
 
-  handleFieldChange = (e) => {
-    const name = e.target.name
-    this.setState({ [name]: e.target.value })
-  }
-
-  clearFields = () => {
-    return this.setState({
-      username: '',
-      password: ''
-    })
+  handleLogout = async () => {
+    const { logout } = this.props
+    try {
+      logout()
+      this.setState(baseState)
+    } catch(e) {
+      return this.displayNotification(e)
+    }
   }
 
   toggleCreateForm = () => {
@@ -105,26 +78,11 @@ class App extends React.Component {
     const { blogs, user, logout } = this.props
     const { notification, displayNewForm } = this.state
 
-    if(!user) {
-      return (
-        <div>
-          {notification && <Notification msg={notification.msg} status={notification.status} />}
-          <LoginForm
-            handleNameChange={this.handleFieldChange}
-            handlePwdChange={this.handleFieldChange}
-            handleLogin={this.handleLogin}
-            username={this.state.username}
-            password={this.state.password}
-          />
-        </div>
-      )
-    }
-
     return (
       <div>
         {notification && <Notification msg={notification.msg} status={notification.status} />}
         <h1>Blogs</h1>
-        <p>{user.name} logged in <button onClick={logout}>logout</button></p>
+        <p>{!!user && user.name} logged in <button onClick={logout}>logout</button></p>
 
         {!displayNewForm && <button onClick={this.toggleCreateForm}>create new</button>}
 
@@ -160,11 +118,16 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {
-  login,
-  logout,
-  setUser,
-  fetchBlogs,
-  removeBlog,
-  likeBlog,
-})(App)
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      login,
+      logout,
+      setUser,
+      fetchBlogs,
+      removeBlog,
+      likeBlog,
+    }
+  )(App)
+)
