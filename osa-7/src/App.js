@@ -1,20 +1,21 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-import * as blogService from './services/blogService'
+import { login, logout, setUser } from './store/authReducer'
+import { fetchBlogs, removeBlog, likeBlog } from './store/blogReducer'
+
 import * as authService from './services/authService'
 import * as storage from './util/localStorage'
 
 import CreateNewBlogForm from './components/CreateBlogForm';
 import Notification from './components/Notification'
-import LoginForm from './components/LoginForm'
+import LoginForm from './components/Login/LoginForm'
 import Togglable from './components/Togglable'
 import Blog from './components/Blog'
 
 const baseState = {
-  blogs: [],
   username: '',
   password: '',
-  user: null,
   notification: null,
   displayNewForm: false,
 }
@@ -25,41 +26,32 @@ class App extends React.Component {
     this.state = baseState
   }
 
-  componentWillMount() {
+  async componentDidMount() {
+    const { setUser } = this.props
     const user = storage.get('user')
 
     if(user) {
-      this.setState({ user })
+      setUser(user)
     }
   }
 
-  async componentDidMount() {
-    const { user } = this.state
-
-    if(user){
-      this.fetchBlogs()
+  componentWillReceiveProps(nextProps) {
+    if( this.props.user === null && !!nextProps.user) {
+      this.props.fetchBlogs()
     }
-  }
-
-  fetchBlogs = async () => {
-    const blogs = await blogService.getAll()
-    return this.setState({ blogs })
   }
 
   handleLogin = async (e) => {
     e.preventDefault()
     const { username, password } = this.state
+    const { login } = this.props
 
     try{
-      const user = await authService.login({
-        username,
-        password
-      })
-
       this.clearFields()
-      return this.setState({ user }, () => this.fetchBlogs())
+      return login({ username, password })
 
     } catch(e) {
+      console.log('asdasd')
       this.clearFields()
       this.displayNotification('käyttäjätunnus tai salasana virheellinen')
     }
@@ -74,23 +66,13 @@ class App extends React.Component {
     }
   }
 
-  handleLike = async (blogData) => {
-    const { blogs } = this.state
-    const index = this.state.blogs.indexOf(blogData)
-    const data = await blogService.like({...blogData, likes: blogData.likes + 1})
-
-    blogs[index] = data
-
-    return this.setState({ blogs: [...blogs] })
-  }
-
-  handleDelete = async (blog) => {
+  handleDelete = async ({ id }) => {
+    const { removeBlog } = this.props
     const really = window.confirm('Are you sure you want to delete this blog?')
 
     if(really) {
       try {
-        await blogService.remove(blog.id)
-        return this.fetchBlogs()
+        await removeBlog(id)
       } catch (e) {
         return this.displayNotification(e.message)
       }
@@ -120,8 +102,8 @@ class App extends React.Component {
   }
 
   render() {
-    const { user, blogs, notification, displayNewForm } = this.state
-    blogs.sort((a, b) => (a.likes < b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0))
+    const { blogs, user, logout } = this.props
+    const { notification, displayNewForm } = this.state
 
     if(!user) {
       return (
@@ -142,7 +124,7 @@ class App extends React.Component {
       <div>
         {notification && <Notification msg={notification.msg} status={notification.status} />}
         <h1>Blogs</h1>
-        <p>{user.name} logged in <button onClick={this.handleLogout}>logout</button></p>
+        <p>{user.name} logged in <button onClick={logout}>logout</button></p>
 
         {!displayNewForm && <button onClick={this.toggleCreateForm}>create new</button>}
 
@@ -154,12 +136,12 @@ class App extends React.Component {
         />
 
         <div className="blogs-container">
-          {blogs.map((blog) => {
+          {!!blogs.length && blogs.map((blog) => {
             return (
               <Togglable key={blog.id} title={`${blog.title}, ${blog.author}`}>
                 <Blog
                   blog={blog}
-                  handleLike={() => this.handleLike(blog)}
+                  handleLike={() => this.props.likeBlog(blog)}
                   handleDelete={() => this.handleDelete(blog)}
                 />
               </Togglable>
@@ -171,4 +153,18 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    blogs: state.blogs.sort((a, b) => (a.likes < b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0))
+  }
+}
+
+export default connect(mapStateToProps, {
+  login,
+  logout,
+  setUser,
+  fetchBlogs,
+  removeBlog,
+  likeBlog,
+})(App)

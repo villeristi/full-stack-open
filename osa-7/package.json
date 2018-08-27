@@ -4,10 +4,10 @@
   "description": "Full Stack Open - osa 5 bloglist front-end",
   "main": "index.js",
   "scripts": {
-    "start:ui": "react-scripts start",
-    "start:api": "node ./api/index",
-    "dev:api": "nodemon --watch api ./api/index",
-    "build": "react-scripts build",
+    "ui:start": "react-scripts start",
+    "api:start": "node ./api/index",
+    "api:dev": "nodemon --watch api ./api/index",
+    "ui:build": "react-scripts build",
     "lint": "eslint .",
     "test": "CI=true react-scripts test --env=jsdom"
   },
@@ -32,7 +32,11 @@
     "prop-types": "^15.6.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.0.17",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "enzyme": "^3.5.0",

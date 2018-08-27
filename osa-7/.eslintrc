@@ -9,8 +9,8 @@
     "ecmaVersion": 2017
   },
   "extends": [
-    "react-app",
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
   "rules": {
     "no-console": "off",
