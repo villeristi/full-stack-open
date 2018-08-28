@@ -3,9 +3,11 @@ import thunk from 'redux-thunk'
 
 import authReducer from './authReducer'
 import blogReducer from './blogReducer'
+import userReducer from './userReducer'
 
 const reducers = combineReducers({
-  user: authReducer,
+  auth: authReducer,
+  users: userReducer,
   blogs: blogReducer,
 })
 

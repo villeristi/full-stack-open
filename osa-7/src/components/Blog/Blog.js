@@ -1,6 +1,7 @@
 import React from 'react'
+import * as storage from '../../util/localStorage'
+
 import './blog.css'
-import * as storage from '../util/localStorage'
 
 const currentUser = storage.get('user')
 

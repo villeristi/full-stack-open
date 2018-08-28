@@ -7,14 +7,12 @@ import { fetchBlogs, removeBlog, likeBlog } from './store/blogReducer'
 
 import * as storage from './util/localStorage'
 
-import CreateNewBlogForm from './components/CreateBlogForm';
-import Notification from './components/Notification'
+import Notification from './components/Notification/Notification'
 import Togglable from './components/Togglable'
-import Blog from './components/Blog'
+import Blog from './components/Blog/Blog'
 
 const baseState = {
   notification: null,
-  displayNewForm: false,
 }
 
 class App extends React.Component {
@@ -27,7 +25,7 @@ class App extends React.Component {
     const { setUser, history } = this.props
     const user = storage.get('user')
 
-    if(!!this.props.user) {
+    if(!!this.props.auth) {
       return this.props.fetchBlogs()
     }
 
@@ -39,7 +37,7 @@ class App extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if( this.props.user === null && !!nextProps.user) {
+    if( this.props.auth === null && !!nextProps.auth) {
       this.props.fetchBlogs()
     }
   }
@@ -57,20 +55,6 @@ class App extends React.Component {
     }
   }
 
-  handleLogout = async () => {
-    const { logout, history } = this.props
-    try {
-      logout()
-      return history.push('/login')
-    } catch(e) {
-      return this.displayNotification(e)
-    }
-  }
-
-  toggleCreateForm = () => {
-    return this.setState({ displayNewForm: !this.state.displayNewForm })
-  }
-
   displayNotification = (msg, status = 'error') => {
     this.setState({ notification: { msg, status } }, () => {
       setTimeout(() => this.setState({ notification: null }), 3000)
@@ -78,23 +62,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { blogs, user } = this.props
-    const { notification, displayNewForm } = this.state
+    const { blogs } = this.props
+    const { notification } = this.state
 
     return (
       <div>
-        {notification && <Notification msg={notification.msg} status={notification.status} />}
-        <h1>Blogs</h1>
-        <p>{!!user && user.name} logged in <button onClick={this.handleLogout}>logout</button></p>
-
-        {!displayNewForm && <button onClick={this.toggleCreateForm}>create new</button>}
-
-        <CreateNewBlogForm
-          displayNotification={this.displayNotification}
-          fetchBlogs={this.fetchBlogs}
-          toggle={this.toggleCreateForm}
-          visible={displayNewForm}
-        />
+        <Notification notification={notification} />
 
         <div className="blogs-container">
           {!!blogs.length && blogs.map((blog) => {
@@ -116,7 +89,7 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    auth: state.auth,
     blogs: state.blogs.sort((a, b) => (a.likes < b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0))
   }
 }

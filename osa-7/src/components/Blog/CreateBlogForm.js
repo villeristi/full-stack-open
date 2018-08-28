@@ -1,6 +1,6 @@
 import React from 'react'
 
-import * as blogService from '../services/blogService'
+import * as blogService from '../../services/blogService'
 
 const newBlog = {
   title: '',

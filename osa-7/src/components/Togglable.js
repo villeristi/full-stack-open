@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './blog.css'
-
 export default class Togglable extends React.Component {
 
   static propTypes = {

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import * as storage from '../../util/localStorage'
 import { login, logout } from '../../store/authReducer'
 
-class Login extends React.Component {
+class LoginForm extends React.Component {
 
   constructor() {
     super()
@@ -24,7 +24,7 @@ class Login extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if( this.props.user === null && !!nextProps.user) {
+    if( this.props.auth === null && !!nextProps.auth) {
       return this.props.history.push('/')
     }
   }
@@ -91,10 +91,10 @@ class Login extends React.Component {
 
 export default withRouter(
   connect(
-    ({ user }) => {
+    ({ auth }) => {
       return {
-        user,
+        auth,
       }
     },
     { login, logout }
-  )(Login))
+  )(LoginForm))
