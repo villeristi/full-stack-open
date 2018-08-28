@@ -21,6 +21,9 @@ const BlogSchema = new mongoose.Schema({
     required: false,
     default: 0,
   },
+  comments: {
+    type: [String],
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
@@ -28,13 +31,14 @@ const BlogSchema = new mongoose.Schema({
 }, {
     // Format responses
     toJSON: {
-      transform(doc, { _id, author, title, url, likes, user }) {
+      transform(doc, { _id, author, title, url, likes, comments, user }) {
         return {
           id: _id,
           title,
           author,
           url,
           likes,
+          comments,
           user,
         }
       }
