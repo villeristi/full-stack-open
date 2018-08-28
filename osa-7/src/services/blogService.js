@@ -28,3 +28,9 @@ export const like = async (blogData) => {
 
   return data
 }
+
+export const comment = async (id, content) => {
+  const { data } = await post(`${API_URL}/blogs/${id}/comment`, { comment: content })
+
+  return data
+}

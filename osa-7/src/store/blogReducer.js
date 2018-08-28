@@ -3,11 +3,16 @@ import * as blogService from '../services/blogService'
 const initialState = []
 
 const reducer = (store = initialState, action) => {
+  let index
   switch(action.type){
     case 'BLOGS/FETCH':
       return [...action.blogs]
     case 'BLOGS/LIKE':
-      const index = store.findIndex(({ id }) => id === action.blog.id)
+      index = store.findIndex(({ id }) => id === action.blog.id)
+      store[index] = action.blog
+      return [...store ]
+    case 'BLOGS/COMMENT':
+      index = store.findIndex(({ id }) => id === action.blog.id)
       store[index] = action.blog
       return [...store ]
     case 'BLOGS/DELETE':
@@ -59,5 +64,16 @@ export const likeBlog = (blogData) => {
     })
   }
 }
+
+export const commentOnBlog = (id, comment) => {
+  return async (dispatch) => {
+    const blog = await blogService.comment(id, comment)
+    return dispatch({
+      type: 'BLOGS/COMMENT',
+      blog
+    })
+  }
+}
+
 
 export default reducer

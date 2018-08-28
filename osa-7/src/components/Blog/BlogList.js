@@ -18,7 +18,10 @@ class BlogList extends React.Component {
                 <Link className="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
                       to={`/blogs/${blog.id}`} key={blog.id}>
                   {blog.title}
-                  <span className="badge badge-secondary badge-pill"><i className="fa fa-user"></i> {blog.author}</span>
+                  <span className="badge badge-secondary badge-pill">
+                    <i className="fa fa-user"></i> {blog.author}
+                    <i className="ml-1 fa fa-comment-o"></i> {blog.comments.length}
+                  </span>
                 </Link>
               )
             })}
