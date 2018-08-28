@@ -12,13 +12,24 @@ class UserList extends React.Component {
   }
 
   render() {
-
     const { currentUser } = this.props
+
+    if(!currentUser) {
+      return null
+    }
 
     return (
       <div>
-        <h2>Single</h2>
-        <p>{!!currentUser && currentUser.name}</p>
+        <h2>{currentUser.name}</h2>
+        <strong>Added blogs:</strong>
+
+        <ul>
+          {!!currentUser.blogs.length && currentUser.blogs.map((blog) => {
+            return (
+              <li key={blog.id}>{blog.title}</li>
+            )
+          })}
+        </ul>
       </div>
     )
   }

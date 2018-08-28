@@ -31,8 +31,12 @@ class CurrentUser extends React.Component {
   render() {
     const { auth } = this.props
 
+    if(!auth) {
+      return null
+    }
+
     return (
-      <p>{!!auth && auth.name} logged in <button onClick={this.handleLogout}>logout</button></p>
+      <p>{auth.name} logged in <button onClick={this.handleLogout}>logout</button></p>
     )
   }
 }

@@ -5,6 +5,7 @@ import LoginForm from '../Auth/LoginForm'
 import UserList from '../Users/UserList'
 import Header from '../Header/Header';
 import SingleUser from '../Users/SingleUser';
+import BlogList from '../Blog/BlogList';
 
 const NotFound = () => {
   return (
@@ -16,14 +17,16 @@ const Root = () => (
   <div>
     <Router>
       <div>
-        <Header />
-        <Switch>
-          <Route exact path="/" component={App} />
-          <Route exact path="/login" component={LoginForm} />
-          <Route exact path="/users" component={UserList} />
-          <Route exact path="/users/:id" component={SingleUser} />
-          <Route component={NotFound} />
-        </Switch>
+        <App>
+          <Header />
+          <Switch>
+            <Route exact path="/" component={BlogList}/>
+            <Route exact path="/login" component={LoginForm} />
+            <Route exact path="/users" component={UserList} />
+            <Route exact path="/users/:id" component={SingleUser} />
+            <Route component={NotFound} />
+          </Switch>
+        </App>
       </div>
     </Router>
   </div>

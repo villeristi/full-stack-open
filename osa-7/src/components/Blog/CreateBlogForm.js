@@ -15,6 +15,7 @@ export default class CreateNewBlogForm extends React.Component {
 
     this.state = {
       newBlog,
+      visible: false,
     }
   }
 
@@ -34,6 +35,10 @@ export default class CreateNewBlogForm extends React.Component {
     }
   }
 
+  toggleVisibility = () => {
+    return this.setState({ visible: !this.state.visible })
+  }
+
   handleChange = (e) => {
     const { newBlog } = this.state
     return this.setState({ newBlog: {...newBlog, [e.target.name]: e.target.value}})
@@ -45,11 +50,11 @@ export default class CreateNewBlogForm extends React.Component {
 
   render() {
 
-    const { toggle, visible } = this.props
+    const { visible } = this.state
     const { author, title, url } = this.state.newBlog
 
     if(!visible) {
-      return null
+      return <button onClick={this.toggleVisibility}>create new</button>
     }
 
     return (
@@ -86,7 +91,7 @@ export default class CreateNewBlogForm extends React.Component {
           <button type="submit">Create</button>
         </form>
 
-        <button onClick={toggle}>close</button>
+        <button onClick={this.toggleVisibility}>close</button>
       </div>
     )
   }
