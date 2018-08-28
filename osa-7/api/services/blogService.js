@@ -1,4 +1,4 @@
-const { Blog } = require('../config/models')
+const { Blog, User } = require('../config/models')
 
 module.exports = {
   getAll() {
@@ -19,6 +19,10 @@ module.exports = {
   },
 
   async delete(_id) {
-    return await Blog.deleteOne({ _id })
+    const blog = await Blog.findById(_id)
+    const user = await User.findById(blog.user)
+
+    await blog.remove()
+    return await user.blogs.pull(_id)
   }
 }

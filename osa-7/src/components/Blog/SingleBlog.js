@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { fetchBlogs, removeBlog, likeBlog } from '../../store/blogReducer'
+import { notify } from '../../store/notificationReducer'
 import * as storage from '../../util/localStorage'
 
 import './blog.css'
@@ -10,16 +11,17 @@ import './blog.css'
 const currentUser = storage.get('user')
 
 class SingleBLog extends React.Component {
-  handleDelete = async (id) => {
-    const { removeBlog } = this.props
+  handleDelete = async ({title, id}) => {
+    const { removeBlog, notify } = this.props
     const really = window.confirm('Are you sure you want to delete this blog?')
 
     if(really) {
       try {
         await removeBlog(id)
-        this.props.history.push('/')
+        notify(`Blog ${title} removed`, 'success')
+        return this.props.history.push('/')
       } catch (e) {
-        return this.displayNotification(e.message)
+        return notify(e.message)
       }
     }
   }
@@ -31,11 +33,11 @@ class SingleBLog extends React.Component {
       return null
     }
 
-    const { likes, title, user, url, id } = currentBlog
+    const { likes, title, user, url } = currentBlog
 
     return (
       <div className="card">
-        <h5 className="card-header">{title} {currentUser && currentUser.username === user.username && <button className="btn btn-outline-danger btn-sm pull-right" onClick={() => this.handleDelete(id)}>Delete</button>}</h5>
+        <h5 className="card-header">{title} {currentUser && currentUser.username === user.username && <button className="btn btn-outline-danger btn-sm pull-right" onClick={() => this.handleDelete(currentBlog)}>Delete</button>}</h5>
         <div className="card-body">
           <p className="card-text"><i className="fa fa-link"></i> <a href={url} target="_blank">{url}</a></p>
           <p className="card-text"><i className="fa fa-user"></i> {user.name}</p>
@@ -60,7 +62,7 @@ const mapStateToProps = ({ blogs }, { match }) => {
 export default withRouter(
   connect(
     mapStateToProps,
-    { removeBlog, likeBlog, fetchBlogs }
+    { removeBlog, likeBlog, fetchBlogs, notify }
   )(SingleBLog)
 )
 

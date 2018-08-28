@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 import authReducer from './authReducer'
 import blogReducer from './blogReducer'
 import userReducer from './userReducer'
-import notificationReducer from './NotificationReducer'
+import notificationReducer from './notificationReducer'
 
 const reducers = combineReducers({
   auth: authReducer,

@@ -11,7 +11,7 @@ class BlogList extends React.Component {
 
     return (
       <div>
-        <h2 className="title border-bottom pb-2">Blogs</h2>
+        <h1 className="title border-bottom pb-2">Blogs</h1>
         <ul className="list-group">
           {!!blogs.length && blogs.map((blog) => {
               return (

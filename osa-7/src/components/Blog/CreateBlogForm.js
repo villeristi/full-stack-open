@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import * as blogService from '../../services/blogService'
-import { notify } from '../../store/NotificationReducer'
+import { notify } from '../../store/notificationReducer'
+import { fetchBlogs, createBlog } from '../../store/blogReducer'
 
 const newBlog = {
   title: '',
@@ -23,14 +23,15 @@ class CreateNewBlogForm extends React.Component {
 
   handleSubmit = async (e) => {
     const { newBlog } = this.state
-    const { fetchBlogs, notify } = this.props
+    const { fetchBlogs, createBlog, notify } = this.props
     e.preventDefault()
 
     try {
-      await blogService.create(newBlog)
+      await createBlog(newBlog)
       this.clearFields()
       notify(`A new blog '${newBlog.title}' by ${newBlog.author} added!`)
-      return await fetchBlogs()
+      this.setState({ visible: false })
+      await fetchBlogs()
     } catch(e) {
       this.clearFields()
       return notify(e.message, 'error')
@@ -94,4 +95,4 @@ class CreateNewBlogForm extends React.Component {
   }
 }
 
-export default connect(null, { notify })(CreateNewBlogForm)
+export default connect(null, { notify, fetchBlogs, createBlog })(CreateNewBlogForm)

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 
 import * as storage from '../../util/localStorage'
 import { login, logout } from '../../store/authReducer'
-import { notify } from '../../store/NotificationReducer'
+import { notify } from '../../store/notificationReducer'
 
 import './login.css'
 

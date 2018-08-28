@@ -17,6 +17,9 @@ router.route('/api/blogs/:id?')
   .put(blogCtrls.put)
   .delete(blogCtrls.del)
 
+router.route('/api/blogs/:id/comment')
+  .post(blogCtrls.comment)
+
 router.route('/api/users')
   .get(userCtrls.get)
   .post(userCtrls.post)
