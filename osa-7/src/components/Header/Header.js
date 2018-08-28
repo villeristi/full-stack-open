@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import NavBar from './Navbar'
 import CreateNewBlogForm from '../Blog/CreateBlogForm';
-import CurrentUser from '../Auth/currentUser'
 
 class Header extends React.Component {
   render() {
@@ -13,9 +13,7 @@ class Header extends React.Component {
 
     return (
       <div>
-        <h1>Lé Blog app</h1>
-
-        <CurrentUser />
+        <NavBar title={'Lé Blog app'} />
 
         <CreateNewBlogForm
           displayNotification={this.displayNotification}

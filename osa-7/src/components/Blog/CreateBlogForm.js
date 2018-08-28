@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import * as blogService from '../../services/blogService'
+import { notify } from '../../store/NotificationReducer'
 
 const newBlog = {
   title: '',
@@ -8,7 +10,7 @@ const newBlog = {
   url: '',
 }
 
-export default class CreateNewBlogForm extends React.Component {
+class CreateNewBlogForm extends React.Component {
 
   constructor(props) {
     super(props)
@@ -21,17 +23,17 @@ export default class CreateNewBlogForm extends React.Component {
 
   handleSubmit = async (e) => {
     const { newBlog } = this.state
-    const { fetchBlogs, displayNotification } = this.props
+    const { fetchBlogs, notify } = this.props
     e.preventDefault()
 
     try {
       await blogService.create(newBlog)
       this.clearFields()
-      displayNotification(`A new blog '${newBlog.title}' by ${newBlog.author} added!`, 'success')
+      notify(`A new blog '${newBlog.title}' by ${newBlog.author} added!`)
       return await fetchBlogs()
     } catch(e) {
       this.clearFields()
-      return displayNotification(e.message)
+      return notify(e.message, 'error')
     }
   }
 
@@ -53,46 +55,43 @@ export default class CreateNewBlogForm extends React.Component {
     const { visible } = this.state
     const { author, title, url } = this.state.newBlog
 
+    const disableBtn = !author || !title || !url
+
     if(!visible) {
-      return <button onClick={this.toggleVisibility}>create new</button>
+      return <button onClick={this.toggleVisibility} className="btn btn-outline-primary btn-lg btn-block mb-4">Create new blog <i className="fa fa-plus"></i></button>
     }
 
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <h2>Create new blog</h2>
-          <div>
-            title
-            <input
-              type="text"
-              name="title"
-              value={title}
-              onChange={this.handleChange}
-            />
+      <form onSubmit={this.handleSubmit} className="mb-4 border p-4">
+        <button type="button" className="close mb-4" aria-label="Close" onClick={this.toggleVisibility}>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div className="clearfix" />
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Title</label>
+          <div className="col-sm-10">
+            <input type="text" className="form-control" name="title" placeholder="Blog title" value={title} onChange={this.handleChange} />
           </div>
-          <div>
-            author
-            <input
-              type="text"
-              name="author"
-              value={author}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            url
-            <input
-              type="text"
-              name="url"
-              value={url}
-              onChange={this.handleChange}
-            />
-          </div>
-          <button type="submit">Create</button>
-        </form>
+        </div>
 
-        <button onClick={this.toggleVisibility}>close</button>
-      </div>
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Author</label>
+          <div className="col-sm-10">
+            <input type="text" className="form-control" name="author" placeholder="Blog author" value={author} onChange={this.handleChange} />
+          </div>
+        </div>
+
+        <div className="form-group row">
+          <label className="col-sm-2 col-form-label">Url</label>
+          <div className="col-sm-10">
+            <input type="text" className="form-control" name="url" placeholder="Blog url" value={url} onChange={this.handleChange} />
+          </div>
+        </div>
+
+        <button type="submit" className="btn btn-success" disabled={disableBtn}>Create</button>
+      </form>
     )
   }
 }
+
+export default connect(null, { notify })(CreateNewBlogForm)

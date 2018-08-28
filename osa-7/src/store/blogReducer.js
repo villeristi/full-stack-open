@@ -1,4 +1,5 @@
 import * as blogService from '../services/blogService'
+import { notify } from './NotificationReducer'
 
 const initialState = []
 
@@ -19,11 +20,15 @@ const reducer = (store = initialState, action) => {
 
 export const fetchBlogs = () => {
   return async (dispatch) => {
-    const blogs = await blogService.getAll()
-    return dispatch({
-      type: 'BLOGS/FETCH',
-      blogs
-    })
+      try {
+      const blogs = await blogService.getAll()
+      return dispatch({
+        type: 'BLOGS/FETCH',
+        blogs
+      })
+    } catch(e) {
+      return dispatch(notify(e.message, 'error'))
+    }
   }
 }
 
@@ -37,7 +42,7 @@ export const removeBlog = (id) => {
         blogs
       })
     } catch(e) {
-      console.log(e)
+      return dispatch(notify(e.message, 'error'))
     }
   }
 }
@@ -45,11 +50,15 @@ export const removeBlog = (id) => {
 export const likeBlog = (blogData) => {
   blogData.likes = blogData.likes + 1
   return async (dispatch) => {
-    const blog = await blogService.like(blogData)
-    return dispatch({
-      type: 'BLOGS/LIKE',
-      blog
-    })
+    try {
+      const blog = await blogService.like(blogData)
+      return dispatch({
+        type: 'BLOGS/LIKE',
+        blog
+      })
+    } catch(e) {
+      return dispatch(notify(e.message, 'error'))
+    }
   }
 }
 

@@ -18,11 +18,11 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-    const { setUser, history } = this.props
+    const { setUser, history, auth, fetchBlogs } = this.props
     const user = storage.get('user')
 
-    if(!!this.props.auth) {
-      return this.props.fetchBlogs()
+    if(!!auth) {
+      return fetchBlogs()
     }
 
     if(user) {
@@ -38,14 +38,8 @@ class App extends React.Component {
     }
   }
 
-  displayNotification = (msg, status = 'error') => {
-    this.setState({ notification: { msg, status } }, () => {
-      setTimeout(() => this.setState({ notification: null }), 3000)
-    })
-  }
-
   render() {
-    const { notification } = this.state
+    const { notification } = this.props
 
     return (
       <div className="container">
@@ -59,7 +53,8 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth,
-    blogs: state.blogs.sort((a, b) => (a.likes < b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0))
+    blogs: state.blogs.sort((a, b) => (a.likes < b.likes) ? 1 : ((b.likes > a.likes) ? -1 : 0)),
+    notification: state.notification,
   }
 }
 
@@ -70,7 +65,7 @@ export default withRouter(
       login,
       logout,
       setUser,
-      fetchBlogs
+      fetchBlogs,
     }
   )(App)
 )

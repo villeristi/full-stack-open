@@ -36,7 +36,9 @@ class CurrentUser extends React.Component {
     }
 
     return (
-      <p>{auth.name} logged in <button onClick={this.handleLogout}>logout</button></p>
+      <span className="navbar-text">
+        <i className="fa fa-user"></i> <strong>{auth.name}</strong> <button onClick={this.handleLogout} className="btn btn-outline-secondary btn-sm">logout <i className="fa fa-sign-out"></i></button>
+      </span>
     )
   }
 }

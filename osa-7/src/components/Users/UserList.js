@@ -17,23 +17,19 @@ class UserList extends React.Component {
     const { users } = this.props
 
     return (
-      <div>
-        <h2>Users</h2>
-        <table>
-          <thead>
-            <tr><td /><td>Blogs added</td></tr>
-          </thead>
-          <tbody>
-              {!!users.length && users.map((user) => {
-                return (
-                  <tr key={user.id}>
-                    <td><Link to={`/users/${user.id}`}>{user.username}</Link></td>
-                    <td>{user.blogs.length}</td>
-                  </tr>
-                )
-              })}
-          </tbody>
-        </table>
+      <div className="card">
+        <div className="card-header">
+          <i className="fa fa-user"></i> User <small className="text-muted pull-right">blogs</small>
+        </div>
+        <ul className="list-group list-group-flush">
+          {!!users.length && users.map(({ id, username, blogs }) => {
+            return (
+              <Link key={id} to={`/users/${id}`} className="list-group-item d-flex justify-content-between align-items-center">
+                {username} <span className="badge badge-primary badge-pill">{blogs.length}</span>
+              </Link>
+            )
+          })}
+        </ul>
       </div>
     )
   }

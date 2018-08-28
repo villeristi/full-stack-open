@@ -6,6 +6,7 @@ import UserList from '../Users/UserList'
 import Header from '../Header/Header';
 import SingleUser from '../Users/SingleUser';
 import BlogList from '../Blog/BlogList';
+import SingleBlog from '../Blog/SingleBlog';
 
 const NotFound = () => {
   return (
@@ -24,6 +25,7 @@ const Root = () => (
             <Route exact path="/login" component={LoginForm} />
             <Route exact path="/users" component={UserList} />
             <Route exact path="/users/:id" component={SingleUser} />
+            <Route exact path="/blogs/:id" component={SingleBlog} />
             <Route component={NotFound} />
           </Switch>
         </App>

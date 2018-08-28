@@ -1,43 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
-import { fetchBlogs, removeBlog, likeBlog } from '../../store/blogReducer'
-import Togglable from '../Togglable'
-import Blog from '../Blog/Blog'
+import { fetchBlogs } from '../../store/blogReducer'
 
 class BlogList extends React.Component {
-
-  handleDelete = async ({ id }) => {
-    const { removeBlog } = this.props
-    const really = window.confirm('Are you sure you want to delete this blog?')
-
-    if(really) {
-      try {
-        await removeBlog(id)
-      } catch (e) {
-        return this.displayNotification(e.message)
-      }
-    }
-  }
-
   render() {
 
     const { blogs } = this.props
 
     return (
-      <div className="blogs-container">
-        {!!blogs.length && blogs.map((blog) => {
-          return (
-            <Togglable key={blog.id} title={`${blog.title}, ${blog.author}`}>
-              <Blog
-                blog={blog}
-                handleLike={() => this.props.likeBlog(blog)}
-                handleDelete={() => this.handleDelete(blog)}
-              />
-            </Togglable>
-          )
-        })}
+      <div>
+        <h2 className="title border-bottom pb-2">Blogs</h2>
+        <ul className="list-group">
+          {!!blogs.length && blogs.map((blog) => {
+              return (
+                <Link className="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
+                      to={`/blogs/${blog.id}`} key={blog.id}>
+                  {blog.title}
+                  <span className="badge badge-secondary badge-pill"><i className="fa fa-user"></i> {blog.author}</span>
+                </Link>
+              )
+            })}
+        </ul>
       </div>
     )
   }
@@ -53,9 +38,7 @@ export default withRouter(
   connect(
     mapStateToProps,
     {
-      fetchBlogs,
-      removeBlog,
-      likeBlog,
+      fetchBlogs
     }
   )(BlogList)
 )

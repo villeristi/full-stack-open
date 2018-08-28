@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchAll } from '../../store/userReducer'
 
@@ -20,16 +21,21 @@ class UserList extends React.Component {
 
     return (
       <div>
-        <h2>{currentUser.name}</h2>
-        <strong>Added blogs:</strong>
-
-        <ul>
-          {!!currentUser.blogs.length && currentUser.blogs.map((blog) => {
-            return (
-              <li key={blog.id}>{blog.title}</li>
-            )
-          })}
-        </ul>
+        <h1 className=" mb-2 pb-2"><i className="fa fa-user"></i> {currentUser.name}</h1>
+        <div className="card">
+          <div className="card-header">
+            Added blogs <small className="text-muted pull-right">comments</small>
+          </div>
+          <ul className="list-group list-group-flush">
+            {!!currentUser.blogs.length && currentUser.blogs.map(({ id, title, comments }) => {
+              return (
+                <Link key={id} to={`/blogs/${id}`} className="list-group-item d-flex justify-content-between align-items-center">
+                  {title} <span className="badge badge-primary badge-pill">{comments.length}</span>
+                </Link>
+              )
+            })}
+          </ul>
+        </div>
       </div>
     )
   }

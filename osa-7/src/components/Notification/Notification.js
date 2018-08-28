@@ -3,16 +3,17 @@ import './notification.css'
 
 export default ({ notification }) => {
 
-  if(!notification) {
+  const { message, status } = notification
+
+  if(!message) {
     return null
   }
 
-  const { status, msg } = notification
-  const className = status && status !== 'success' ? 'error' : 'success'
+  const className = status && status !== 'success' ? 'warning' : 'success'
 
   return (
-    <div className={`notification ${className}`}>
-      <p>{msg}</p>
+    <div className={`mt-3 alert alert-${className}`} role="alert">
+      {message}
     </div>
   )
 }
