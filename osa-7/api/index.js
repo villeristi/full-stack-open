@@ -1,7 +1,10 @@
 const express = require('express')
-const app = express()
+const path = require('path')
 const cors = require('cors')
+
+const app = express()
 const router = express.Router()
+
 
 const db = require('./config/db')
 const blogCtrls = require('./controllers/blog')
@@ -32,6 +35,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(tokenExtractor)
 app.use(router)
+app.use(express.static(path.join(__dirname, '..', 'build')))
+
+// Catch all to react front-end
+app.get('*', function (req, res) {
+  res.sendFile(path.resolve(__dirname, '..', 'build/index.html'))
+})
 
 const PORT = process.env.NODE_ENV !== 'test' ? process.env.PORT || 3003 : null
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))

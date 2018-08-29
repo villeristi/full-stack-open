@@ -16,9 +16,9 @@ class SingleBLog extends React.Component {
   static propTypes = {
     history: PropTypes.object,
     currentBlog: PropTypes.object,
-    commentOnBlog: PropTypes.Function,
-    notify: PropTypes.Function,
-    likeBlog: PropTypes.Function,
+    commentOnBlog: PropTypes.any,
+    notify: PropTypes.any,
+    likeBlog: PropTypes.any,
   }
 
   constructor() {

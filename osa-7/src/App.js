@@ -13,12 +13,12 @@ import Notification from './components/Notification/Notification'
 class App extends React.Component {
 
   static propTypes = {
-    setUser: PropTypes.Function,
+    setUser: PropTypes.any,
     history: PropTypes.object,
     auth: PropTypes.object,
-    fetchBlogs: PropTypes.Function,
+    fetchBlogs: PropTypes.any,
     notification: PropTypes.object,
-    children: PropTypes.object,
+    children: PropTypes.array,
   }
 
   constructor(props) {
@@ -32,12 +32,12 @@ class App extends React.Component {
     const { setUser, history, auth, fetchBlogs } = this.props
     const user = storage.get('user')
 
-    if(auth) {
-      return fetchBlogs()
+    if(user) {
+      setUser(user)
     }
 
-    if(user) {
-      return setUser(user)
+    if(auth) {
+      return fetchBlogs()
     }
 
     return history.push('/login')

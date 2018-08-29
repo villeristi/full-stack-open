@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import * as storage from '../../util/localStorage'
-import { login, logout } from '../../store/authReducer'
+import { login, logout, setUser } from '../../store/authReducer'
 import { notify } from '../../store/notificationReducer'
 
 import './login.css'
@@ -14,6 +14,7 @@ class LoginForm extends React.Component {
   static propTypes = {
     history: PropTypes.object,
     auth: PropTypes.object,
+    setUser: PropTypes.any,
   }
 
   constructor() {
@@ -34,6 +35,7 @@ class LoginForm extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if( this.props.auth === null && !!nextProps.auth) {
+      this.props.setUser(storage.get('user'))
       return this.props.history.push('/')
     }
   }
@@ -41,10 +43,12 @@ class LoginForm extends React.Component {
   handleLogin = async (e) => {
     e.preventDefault()
     const { username, password } = this.state
-    const { login, history, notify } = this.props
+    const { login, setUser, history, notify } = this.props
 
     try{
       await login({ username, password })
+      const user = storage.get('user')
+      setUser(user)
       return history.push('/')
     } catch(err) {
       this.clearFields()
@@ -78,6 +82,7 @@ class LoginForm extends React.Component {
           <label className="sr-only">Password</label>
           <input type="password" name="password" className="form-control" placeholder="Password" value={password} onChange={this.handleFieldChange} />
           <button className="btn btn-lg btn-primary btn-block" type="submit" disabled={disableBtn}>Log in</button>
+          <small>Hint: test & test...</small>
         </form>
       </div>
     )
@@ -87,9 +92,7 @@ class LoginForm extends React.Component {
 export default withRouter(
   connect(
     ({ auth }) => {
-      return {
-        auth,
-      }
+      return { auth }
     },
-    { login, logout, notify }
+    { login, logout, setUser, notify }
   )(LoginForm))

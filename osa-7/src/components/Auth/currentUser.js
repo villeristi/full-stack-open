@@ -9,7 +9,7 @@ import { login, logout, setUser } from '../../store/authReducer'
 class CurrentUser extends React.Component {
 
   static propTypes = {
-    setUser: PropTypes.Function,
+    setUser: PropTypes.any,
     history: PropTypes.object,
     auth: PropTypes.object,
   }

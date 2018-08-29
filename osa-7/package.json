@@ -4,8 +4,9 @@
   "description": "Full Stack Open - osa 5 bloglist front-end",
   "main": "index.js",
   "scripts": {
+    "prestart": "npm run ui:build",
+    "start": "node ./api/index.js",
     "ui:start": "node scripts/start.js",
-    "api:start": "node ./api/index",
     "api:dev": "nodemon --watch api ./api/index",
     "ui:build": "node scripts/build.js",
     "lint": "eslint .",
@@ -22,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/villeristi/full-stack-open/issues"
   },
-  "homepage": "https://github.com/villeristi/full-stack-open#readme",
+  "homepage": "http://localhost:3003/",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "axios": "^0.17.1",
