@@ -9,7 +9,7 @@ node_js:
 before_script: cd osa-7
 
 install:
-  - yarn --frozen-lockfile
+  - yarn
 
 script:
   - yarn run ci
