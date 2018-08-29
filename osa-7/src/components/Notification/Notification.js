@@ -20,7 +20,7 @@ const Notification = ({ notification }) => {
 }
 
 Notification.propTypes = {
-  notification: PropTypes.string,
+  notification: PropTypes.object,
 }
 
 export default Notification

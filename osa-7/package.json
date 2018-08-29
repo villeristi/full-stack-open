@@ -9,7 +9,7 @@
     "api:dev": "nodemon --watch api ./api/index",
     "ui:build": "node scripts/build.js",
     "lint": "eslint .",
-    "test": "CI=true node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom"
   },
   "repository": {
     "type": "git",
