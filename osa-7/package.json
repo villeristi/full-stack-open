@@ -23,7 +23,7 @@
   "bugs": {
     "url": "https://github.com/villeristi/full-stack-open/issues"
   },
-  "homepage": "http://localhost:3003/",
+  "homepage": "https://villeristi-fullstack-open.herokuapp.com/",
   "dependencies": {
     "autoprefixer": "7.1.6",
     "axios": "^0.17.1",
