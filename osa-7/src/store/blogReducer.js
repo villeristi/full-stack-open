@@ -27,7 +27,7 @@ export const fetchBlogs = () => {
     const blogs = await blogService.getAll()
     return dispatch({
       type: 'BLOGS/FETCH',
-      blogs
+      blogs,
     })
   }
 }
@@ -38,7 +38,7 @@ export const createBlog = (blogData) => {
     const blogs = await blogService.getAll()
     return dispatch({
       type: 'BLOGS/FETCH',
-      blogs
+      blogs,
     })
   }
 }
@@ -49,7 +49,7 @@ export const removeBlog = (id) => {
     const blogs = await blogService.getAll()
     return dispatch({
       type: 'BLOGS/DELETE',
-      blogs
+      blogs,
     })
   }
 }
@@ -60,7 +60,7 @@ export const likeBlog = (blogData) => {
     const blog = await blogService.like(blogData)
     return dispatch({
       type: 'BLOGS/LIKE',
-      blog
+      blog,
     })
   }
 }
@@ -70,7 +70,7 @@ export const commentOnBlog = (id, comment) => {
     const blog = await blogService.comment(id, comment)
     return dispatch({
       type: 'BLOGS/COMMENT',
-      blog
+      blog,
     })
   }
 }

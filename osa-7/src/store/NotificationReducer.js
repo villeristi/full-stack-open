@@ -6,7 +6,7 @@ const initialState = {
 const reducer = (store = initialState, action) => {
   switch(action.type){
     case 'NOTIFICATION/SET':
-        return action.notification
+      return action.notification
     case 'NOTIFICATION/CLEAR':
       return initialState
     default:
@@ -21,7 +21,7 @@ export const notify = (message, status = 'success', timeout = 3000) => {
       notification: {
         message,
         status,
-      }
+      },
     })
 
     return setTimeout(() => dispatch({ type: 'NOTIFICATION/CLEAR' }), timeout)

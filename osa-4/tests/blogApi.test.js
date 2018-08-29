@@ -18,7 +18,7 @@ describe('Blog  API', () => {
   beforeAll(async () => {
 
     const user = await User.create(testUser)
-    token = jwt.sign({ username: user.username, id: user._id }, process.env.SECRET)
+    token = jwt.sign({ username: user.username, id: user._id }, process.env.SECRET || 'testingz')
     await listHelper.addInitialBlogs(user)
   })
 

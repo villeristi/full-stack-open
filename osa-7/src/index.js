@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.min.css'
 
-import Root from './components/Root/Root';
+import Root from './components/Root/Root'
 import store from './store'
 
 

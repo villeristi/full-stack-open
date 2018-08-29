@@ -4,7 +4,7 @@ import * as storage from '../util/localStorage'
 
 if(storage.get('user')){
   const { token } = storage.get('user')
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
 }
 
 export const getAll = async () => {

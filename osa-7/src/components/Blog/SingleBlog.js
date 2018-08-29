@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -12,11 +13,19 @@ const currentUser = storage.get('user')
 
 class SingleBLog extends React.Component {
 
+  static propTypes = {
+    history: PropTypes.object,
+    currentBlog: PropTypes.object,
+    commentOnBlog: PropTypes.Function,
+    notify: PropTypes.Function,
+    likeBlog: PropTypes.Function,
+  }
+
   constructor() {
     super()
 
     this.state = {
-      comment: ''
+      comment: '',
     }
   }
 
@@ -71,7 +80,7 @@ class SingleBLog extends React.Component {
         <div className="card">
           <h5 className="card-header">{title} {currentUser && currentUser.username === user.username && <button className="btn btn-outline-danger btn-sm pull-right" onClick={() => this.handleDelete(currentBlog)}>Delete</button>}</h5>
           <div className="card-body">
-            <p className="card-text"><i className="fa fa-link"></i> <a href={url} target="_blank">{url}</a></p>
+            <p className="card-text"><i className="fa fa-link"></i> <a href={url} target="_blank" rel="noopener noreferrer">{url}</a></p>
             <p className="card-text"><i className="fa fa-user"></i> {user.name}</p>
             <button type="button" className="btn btn-outline-primary btn-sm" onClick={() => likeBlog(currentBlog)}>
               Like <span className="badge badge-success">{likes}</span>

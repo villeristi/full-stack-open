@@ -24,5 +24,5 @@ module.exports = {
 
     await blog.remove()
     return await user.blogs.pull(_id)
-  }
+  },
 }

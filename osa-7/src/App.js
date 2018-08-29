@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -10,10 +11,20 @@ import * as storage from './util/localStorage'
 import Notification from './components/Notification/Notification'
 
 class App extends React.Component {
+
+  static propTypes = {
+    setUser: PropTypes.Function,
+    history: PropTypes.object,
+    auth: PropTypes.object,
+    fetchBlogs: PropTypes.Function,
+    notification: PropTypes.object,
+    children: PropTypes.object,
+  }
+
   constructor(props) {
     super(props)
     this.state = {
-      notification: null
+      notification: null,
     }
   }
 
@@ -21,7 +32,7 @@ class App extends React.Component {
     const { setUser, history, auth, fetchBlogs } = this.props
     const user = storage.get('user')
 
-    if(!!auth) {
+    if(auth) {
       return fetchBlogs()
     }
 
@@ -32,7 +43,7 @@ class App extends React.Component {
     return history.push('/login')
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if( this.props.auth === null && !!nextProps.auth) {
       this.props.fetchBlogs()
     }
@@ -46,7 +57,7 @@ class App extends React.Component {
         <Notification notification={notification} />
         {this.props.children}
       </div>
-    );
+    )
   }
 }
 

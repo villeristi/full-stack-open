@@ -1,10 +1,16 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import NavBar from './Navbar'
-import CreateNewBlogForm from '../Blog/CreateBlogForm';
+import CreateNewBlogForm from '../Blog/CreateBlogForm'
 
 class Header extends React.Component {
+
+  static propTypes = {
+    auth: PropTypes.object,
+  }
+
   render() {
 
     if(!this.props.auth) {

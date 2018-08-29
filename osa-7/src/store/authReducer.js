@@ -5,7 +5,7 @@ const initialState = null
 const reducer = (store = initialState, action) => {
   switch(action.type){
     case 'AUTH/LOGIN':
-        return action.user
+      return action.user
     case 'AUTH/LOGOUT':
       return initialState
     case 'AUTH/SET':
@@ -20,7 +20,7 @@ export const login = (credentials) => {
     const user = await authService.login(credentials)
     return dispatch({
       type: 'AUTH/LOGIN',
-      user
+      user,
     })
   }
 }
@@ -28,7 +28,7 @@ export const login = (credentials) => {
 export const setUser = (user) => {
   return {
     type: 'AUTH/SET',
-    user
+    user,
   }
 }
 
@@ -37,7 +37,7 @@ export const logout = () => {
     await authService.logout()
     return dispatch({
       type: 'AUTH/LOGOUT',
-      user: {}
+      user: {},
     })
   }
 }

@@ -36,5 +36,5 @@ module.exports = {
 
   validate(userData) {
     return User.validate(userData)
-  }
+  },
 }

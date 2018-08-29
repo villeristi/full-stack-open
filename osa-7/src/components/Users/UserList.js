@@ -1,9 +1,16 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchAll } from '../../store/userReducer'
 
 class UserList extends React.Component {
+
+  static propTypes = {
+    users: PropTypes.Array,
+    fetchAll: PropTypes.Function,
+  }
+
   componentDidMount() {
     const { users, fetchAll } = this.props
 
@@ -35,7 +42,7 @@ class UserList extends React.Component {
   }
 }
 
-export default connect(({ users, auth }) => {
+export default connect(({ users }) => {
   return {
     users,
   }

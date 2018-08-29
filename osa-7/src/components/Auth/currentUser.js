@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -6,6 +7,12 @@ import * as storage from '../../util/localStorage'
 import { login, logout, setUser } from '../../store/authReducer'
 
 class CurrentUser extends React.Component {
+
+  static propTypes = {
+    setUser: PropTypes.Function,
+    history: PropTypes.object,
+    auth: PropTypes.object,
+  }
 
   async componentDidMount() {
     const { setUser, history } = this.props
@@ -45,7 +52,7 @@ class CurrentUser extends React.Component {
 
 const mapStateToProps = ({ auth }) => {
   return {
-    auth
+    auth,
   }
 }
 

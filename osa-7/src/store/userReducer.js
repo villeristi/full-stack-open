@@ -5,7 +5,7 @@ const initialState = []
 const reducer = (store = initialState, action) => {
   switch(action.type) {
     case 'USERS/FETCH':
-        return action.users
+      return action.users
     case 'USERS/FETCH_SINGLE':
       return initialState
     default:
@@ -18,7 +18,7 @@ export const fetchAll = () => {
     const users = await userService.getAll()
     return dispatch({
       type: 'USERS/FETCH',
-      users
+      users,
     })
   }
 }
@@ -28,7 +28,7 @@ export const fetchSingle = (id) => {
     const user = await userService.getSingle(id)
     return dispatch({
       type: 'USERS/FETCH_SINGLE',
-      user
+      user,
     })
   }
 }

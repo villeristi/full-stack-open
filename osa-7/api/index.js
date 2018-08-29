@@ -28,10 +28,10 @@ router.route('/api/auth/login')
   .post(authCtrls.login)
 
 app.use(cors())
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(tokenExtractor)
-app.use(router);
+app.use(router)
 
 const PORT = process.env.NODE_ENV !== 'test' ? process.env.PORT || 3003 : null
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))

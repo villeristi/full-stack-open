@@ -1,5 +1,5 @@
 import { post } from 'axios'
-import { API_URL } from './constants';
+import { API_URL } from './constants'
 import * as storage from '../util/localStorage'
 
 export const login = async (credentials) => {

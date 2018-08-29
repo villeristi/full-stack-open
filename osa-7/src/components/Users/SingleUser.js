@@ -1,9 +1,17 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchAll } from '../../store/userReducer'
 
 class UserList extends React.Component {
+
+  static propTypes = {
+    users: PropTypes.Array,
+    fetchAll: PropTypes.Function,
+    currentUser: PropTypes.object,
+  }
+
   componentDidMount() {
     const { users, fetchAll } = this.props
 

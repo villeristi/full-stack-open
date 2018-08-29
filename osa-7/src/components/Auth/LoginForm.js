@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -9,6 +10,11 @@ import { notify } from '../../store/notificationReducer'
 import './login.css'
 
 class LoginForm extends React.Component {
+
+  static propTypes = {
+    history: PropTypes.object,
+    auth: PropTypes.object,
+  }
 
   constructor() {
     super()
@@ -26,7 +32,7 @@ class LoginForm extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if( this.props.auth === null && !!nextProps.auth) {
       return this.props.history.push('/')
     }
@@ -54,7 +60,7 @@ class LoginForm extends React.Component {
   clearFields = () => {
     return this.setState({
       username: '',
-      password: ''
+      password: '',
     })
   }
 

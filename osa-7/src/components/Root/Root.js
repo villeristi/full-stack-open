@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import App from '../../App'
 import LoginForm from '../Auth/LoginForm'
 import UserList from '../Users/UserList'
-import Header from '../Header/Header';
-import SingleUser from '../Users/SingleUser';
-import BlogList from '../Blog/BlogList';
-import SingleBlog from '../Blog/SingleBlog';
+import Header from '../Header/Header'
+import SingleUser from '../Users/SingleUser'
+import BlogList from '../Blog/BlogList'
+import SingleBlog from '../Blog/SingleBlog'
 
 const NotFound = () => {
   return (

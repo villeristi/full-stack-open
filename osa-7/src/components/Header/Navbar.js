@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import CurrentUser from '../Auth/currentUser'
@@ -20,6 +21,10 @@ const NavBar = ({ title }) => {
       </div>
     </nav>
   )
+}
+
+NavBar.propTypes = {
+  title: PropTypes.string,
 }
 
 export default NavBar

@@ -1,13 +1,15 @@
-const helper = require('./helpers')
+const helpers = require('./helpers')
 
-const app = helper.getApp()
+const app = helpers.getApp()
 
 describe.only('User API', () => {
 
   beforeAll(async () => {
+    await helpers.addInitialUsers()
   })
 
   afterAll(async () => {
+    await helpers.tearDownUsers()
     app.close()
   })
 
@@ -18,12 +20,65 @@ describe.only('User API', () => {
       .expect('Content-Type', /application\/json/)
   })
 
+  test('Users can be added', async () => {
+
+    const user = {
+      username: 'test',
+      name: 'test',
+      password: '1234',
+      adult: false
+    }
+
+    return await app
+      .post('/api/users')
+      .send(user)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+      .expect(({ body }) => {
+        expect(body.username).toBe('test')
+        expect(body.adult).toBeFalsy()
+      })
+  })
+
+  test('Adult-field defaults to `true`', async () => {
+
+    const user = {
+      username: 'another',
+      name: 'another',
+      password: '1234'
+    }
+
+    return await app
+      .post('/api/users')
+      .send(user)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+      .expect(({ body }) => {
+        expect(body.adult).toBeTruthy()
+      })
+  })
+
   test('Password length must be minimum of three', async () => {
 
     const user = {
       username: 'anotherz',
       name: 'anotherz',
       password: '12'
+    }
+
+    return await app
+      .post('/api/users')
+      .send(user)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+  })
+
+  test('Username must be unique', async () => {
+
+    const user = {
+      name: "asd",
+      username: "asd",
+      password: "1234"
     }
 
     return await app
