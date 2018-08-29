@@ -6,7 +6,7 @@ sudo: false
 node_js:
   - "8"
 
-before_script: cd osa-7
+before_install: cd osa-7
 
 install:
   - yarn
@@ -15,4 +15,5 @@ script:
   - yarn run ci
 
 after_script:
-  - ../deploytoheroku osa-7
+  - cd ..
+  - ./deploytoheroku osa-7
