@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import App from './App'
-import * as storage from './util/localStorage'
+import App from '../../App'
+import * as storage from '../../util/localStorage'
 
 const user = {
   name: 'test',
@@ -30,7 +30,7 @@ describe('<App />', () => {
       expect(loginForm).toBeTruthy()
     })
 
-    test('Displays blogs for logge-in users', () => {
+    test('Displays blogs for logged-in users', () => {
       storage.set('user', user)
       const blogs = AppComponent.find('.blogs-container')
       expect(blogs).toBeTruthy()

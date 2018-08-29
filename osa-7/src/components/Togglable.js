@@ -24,9 +24,9 @@ export default class Togglable extends React.Component {
     const showWhenVisible = { display: this.state.visible ? '' : 'none' }
 
     return (
-      <div className="blog-container">
+      <div className="toggle-container">
         <p onClick={this.toggleVisibility} className="title">{title}</p>
-        <div style={showWhenVisible} className="blog-content">
+        <div style={showWhenVisible} className="toggle-content">
           {this.props.children}
         </div>
       </div>
