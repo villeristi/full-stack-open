@@ -97,8 +97,7 @@
     ],
     "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
     "testMatch": [
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}",
-      "<rootDir>/api/**/?(*.)(spec|test).{js,jsx,mjs}"
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",
